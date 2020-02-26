@@ -1,9 +1,6 @@
 ﻿using Core.EventStore.Autofac;
 using Core.EventStore.Invokers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QueryService.InvokerPipelines
 {
@@ -11,10 +8,13 @@ namespace QueryService.InvokerPipelines
     {
         public override void AfterInvoke(EventContext eventContext)
         {
+
         }
 
         public override void BeforeInvoke(EventContext eventContext)
         {
+                Console.WriteLine("********************");
+                Console.WriteLine(eventContext.EventName);
         }
     }
 }
