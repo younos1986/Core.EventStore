@@ -12,5 +12,6 @@ jobs:
     - name: Setup .NET Core app
       with:
         dotnet-version: 3.1.101
+    - uses: younos1986/Core.EventStore
     - name: Build with dotnet
       run: dotnet build ./Core.EventStore.sln --configuration Release
