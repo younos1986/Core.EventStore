@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.EventStore.Autofac
 {
-    public class EventContext
+    public class EventStoreContext
     {
         
         public string EventName { get; set; }

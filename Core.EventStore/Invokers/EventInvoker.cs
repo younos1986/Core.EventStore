@@ -7,11 +7,11 @@ namespace Core.EventStore.Invokers
 {
     public class EventInvoker : ProjectorInvoker
     {
-        public override void AfterInvoke(EventContext eventContext)
+        public override void AfterInvoke(EventStoreContext eventContext)
         {
         }
 
-        public override void BeforeInvoke(EventContext eventContext)
+        public override void BeforeInvoke(EventStoreContext eventContext)
         {
         }
     }

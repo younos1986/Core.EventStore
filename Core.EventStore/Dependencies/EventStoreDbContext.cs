@@ -18,13 +18,14 @@ namespace Core.EventStore.Dependencies
             _eventStoreConnection = eventStoreConnection;
         }
 
-        public async Task AppendToStreamAsync<T>(T command)
+        public async Task AppendToStreamAsync<T>(T command,Guid? eventId=null)
         {
             string commandName = command.GetType().Name;
             string jsonData = JsonConvert.SerializeObject(command);
             byte[] dataBytes = Encoding.UTF8.GetBytes(jsonData);
 
-            EventData eventData = new EventData(eventId: Guid.NewGuid(),
+            EventData eventData = new EventData(
+                eventId: eventId ?? Guid.NewGuid(),
                    type: commandName,
                    isJson: true,
                    data: dataBytes,

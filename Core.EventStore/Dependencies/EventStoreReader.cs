@@ -30,7 +30,7 @@ namespace Core.EventStore.Dependencies
                 var jsonBytes = resolvedEvent.Event.Data;
                 var eventId = resolvedEvent.Event.EventId;
 
-                var eventContext = new EventContext()
+                var eventContext = new EventStoreContext()
                 {
                     EventId = eventId,
                     ResolvedEvent = resolvedEvent,
@@ -57,7 +57,7 @@ namespace Core.EventStore.Dependencies
                 var jsonBytes = resolvedEvent.Event.Data;
                 var eventId = resolvedEvent.Event.EventId;
 
-                var eventContext = new EventContext()
+                var eventContext = new EventStoreContext()
                 {
                     EventId = eventId,
                     ResolvedEvent = resolvedEvent,

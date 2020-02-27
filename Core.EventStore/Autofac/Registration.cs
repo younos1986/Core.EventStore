@@ -5,8 +5,6 @@ using Core.EventStore.Invokers;
 using Core.EventStore.Registration;
 using EventStore.ClientAPI;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.EventStore.Autofac
 {

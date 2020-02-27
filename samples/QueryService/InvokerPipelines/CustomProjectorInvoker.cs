@@ -6,12 +6,12 @@ namespace QueryService.InvokerPipelines
 {
     public class CustomProjectorInvoker : ProjectorInvoker
     {
-        public override void AfterInvoke(EventContext eventContext)
+        public override void AfterInvoke(EventStoreContext eventContext)
         {
 
         }
 
-        public override void BeforeInvoke(EventContext eventContext)
+        public override void BeforeInvoke(EventStoreContext eventContext)
         {
                 Console.WriteLine("********************");
                 Console.WriteLine(eventContext.EventName);

@@ -7,8 +7,6 @@ namespace Core.EventStore.Dependencies
 {
     public interface IEventStoreDbContext
     {
-        Task AppendToStreamAsync<T>(T command);
-
-     
+         Task AppendToStreamAsync<T>(T command,Guid? eventId=null);
     }
 }

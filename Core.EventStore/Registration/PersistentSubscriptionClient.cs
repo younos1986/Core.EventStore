@@ -89,7 +89,7 @@ namespace Core.EventStore.Registration
             var eventId= resolvedEvent.Event.EventId;
 
 
-            var eventContext = new EventContext()
+            var eventContext = new EventStoreContext()
             {
                 EventId = eventId,
                 ResolvedEvent= resolvedEvent,

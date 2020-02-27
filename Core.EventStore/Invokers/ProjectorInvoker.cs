@@ -13,9 +13,9 @@ namespace Core.EventStore.Invokers
     {
 
 
-        public abstract void BeforeInvoke(EventContext eventContext);
+        public abstract void BeforeInvoke(EventStoreContext eventContext);
 
-        public bool Invoke(EventContext eventContext) // Guid eventId,string eventName, byte[] jsonBytes)
+        public bool Invoke(EventStoreContext eventContext) // Guid eventId,string eventName, byte[] jsonBytes)
         {
             var jsonData = Encoding.ASCII.GetString(eventContext.ResolvedEvent.Event.Data);
             
@@ -57,7 +57,7 @@ namespace Core.EventStore.Invokers
             return JsonConvert.DeserializeObject(data, parameterInfo.ParameterType);
         }
 
-        public abstract void AfterInvoke(EventContext eventContext);
+        public abstract void AfterInvoke(EventStoreContext eventContext);
 
 
         static List<Type> types = new List<Type>();
