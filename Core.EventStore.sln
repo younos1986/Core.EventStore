@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C10F2E43
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.Test", "tests\Core.EventStore.Test\Core.EventStore.Test.csproj", "{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.IntegrationTest", "tests\Core.EventStore.IntegrationTest\Core.EventStore.IntegrationTest.csproj", "{36D48125-7DDB-481A-B87F-D7ABD23FA385}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D48125-7DDB-481A-B87F-D7ABD23FA385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D48125-7DDB-481A-B87F-D7ABD23FA385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D48125-7DDB-481A-B87F-D7ABD23FA385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D48125-7DDB-481A-B87F-D7ABD23FA385}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{8C5B23BB-C7F4-4C8F-835F-8A237586DF18} = {0E0BCA44-E371-4FAE-882A-519BAC7AAB47}
 		{A79A9027-58B5-4D42-9A3A-95FD464F5CEE} = {0E0BCA44-E371-4FAE-882A-519BAC7AAB47}
 		{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A} = {C10F2E43-3E4B-43B5-B5CF-F7FC61867CA9}
+		{36D48125-7DDB-481A-B87F-D7ABD23FA385} = {C10F2E43-3E4B-43B5-B5CF-F7FC61867CA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4111EE0-9B47-40FA-998C-D3A0F0CE07B1}

@@ -12,14 +12,19 @@ namespace QueryService.Controllers
     public class ValuesController : ControllerBase
     {
 
-
-        public ValuesController()
+        //Core.EventStore.Dependencies.IEventStoreReader _eventStoreReader;
+        public ValuesController()//Core.EventStore.Dependencies.IEventStoreReader eventStoreReader)
         {
+          //  _eventStoreReader = eventStoreReader;
+
         }
 
         [HttpGet]
         public IActionResult  Get()
         {
+
+            //var streams = _eventStoreReader.PerformAll().GetAwaiter();
+
            return Ok(new  { Response  = "Query Service"} );
         }
     }

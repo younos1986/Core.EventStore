@@ -1,12 +1,8 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Core.EventStore.Autofac;
 using IntegrationEvents;
 using QueryService.InvokerPipelines;
-using QueryService.Projectors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QueryService.IoCC.Modules
 {
@@ -28,13 +24,9 @@ namespace QueryService.IoCC.Modules
             }, new CustomProjectorInvoker())
                 .SubscribeRead(subscriptionConfiguration =>
                 {
-
-                    subscriptionConfiguration.AddEvent<CustomerCreated>("CustomerCreated");
-                    subscriptionConfiguration.AddEvent<CustomerModified>("CustomerModified");
-
-                } );
-
+                    subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
+                    subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
+                });
         }
-
     }
 }
