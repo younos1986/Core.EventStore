@@ -15,30 +15,31 @@ namespace Core.EventStore.Registration
     public class PersistentSubscriptionClient : IPersistentSubscriptionClient
     {
         private readonly IEventStoreConnection _eventStoreConnection;
-        private readonly IEventStoreConnectionManager _eventStoreConnectionManager; 
+        private readonly IEventStoreConnectionManager _eventStoreConnectionManager;
         private readonly ProjectorInvoker _projectorInvoker;
-        public PersistentSubscriptionClient(IEventStoreConnection eventStoreConnection, ProjectorInvoker projectorInvoker, IEventStoreConnectionManager eventStoreConnectionManager)
+        private ISubscriptionConfiguration _subscriptionConfiguration;
+
+        public PersistentSubscriptionClient(
+            IEventStoreConnection eventStoreConnection,
+            ProjectorInvoker projectorInvoker,
+            IEventStoreConnectionManager eventStoreConnectionManager,
+            ISubscriptionConfiguration subscriptionConfiguration)
         {
             _eventStoreConnection = eventStoreConnection;
             _projectorInvoker = projectorInvoker;
             _eventStoreConnectionManager = eventStoreConnectionManager;
+            _subscriptionConfiguration = subscriptionConfiguration;
         }
 
         private static readonly UserCredentials User = new UserCredentials("admin", "changeit");
         private EventStoreSubscription _subscription;
 
-        public void Start()
+        public bool Start()
         {
-            //using (_eventStoreConnection)
-            {
-                _eventStoreConnectionManager.Start();
-                //eventStoreConnection.ConnectAsync().Wait();
-                CreateSubscription();
-
-                Console.WriteLine("waiting for events. press enter to exit");
-                //Console.ReadLine();
-                //Thread.Sleep()
-            }
+            _eventStoreConnectionManager.Start();
+            CreateSubscription();
+            Console.WriteLine("waiting for events. press enter to exit");
+            return true;
         }
 
 
@@ -62,7 +63,8 @@ namespace Core.EventStore.Registration
             catch (AggregateException ex)
             {
                 if (ex.InnerException != null && (ex.InnerException.GetType() != typeof(InvalidOperationException)
-                                                  && ex.InnerException?.Message != $"Subscription group on stream already exists"))
+                                                  && ex.InnerException?.Message !=
+                                                  $"Subscription group on stream already exists"))
                 {
                     throw;
                 }
@@ -73,17 +75,19 @@ namespace Core.EventStore.Registration
         {
             try
             {
-                _subscription = await _eventStoreConnection.SubscribeToAllAsync(false, EventAppeared, SubscriptionDropped, User);
+                _subscription =
+                    await _eventStoreConnection.SubscribeToAllAsync(false, EventAppeared, SubscriptionDropped, User);
             }
             catch
             {
                 _eventStoreConnection.ConnectAsync().Wait();
-                _subscription = await _eventStoreConnection.SubscribeToAllAsync(false, EventAppeared, SubscriptionDropped, User);
+                _subscription =
+                    await _eventStoreConnection.SubscribeToAllAsync(false, EventAppeared, SubscriptionDropped, User);
             }
         }
 
         private void SubscriptionDropped(EventStoreSubscription eventStorePersistentSubscriptionBase,
-           SubscriptionDropReason subscriptionDropReason, Exception ex)
+            SubscriptionDropReason subscriptionDropReason, Exception ex)
         {
             ConnectToSubscription();
         }
@@ -95,25 +99,19 @@ namespace Core.EventStore.Registration
             if (@event == null || !@event.IsJson)
                 return Task.FromResult(0);
 
-            var eventName = resolvedEvent.Event.EventStreamId;
-            var jsonBytes= resolvedEvent.Event.Data;
-            var eventId= resolvedEvent.Event.EventId;
 
-            var events = Autofac.SubscriptionConfiguration.Events;
+            var eventName = resolvedEvent.Event.EventStreamId;
+            var jsonBytes = resolvedEvent.Event.Data;
+            var eventId = resolvedEvent.Event.EventId;
+
+            var events = _subscriptionConfiguration.SubscribedEvents;
             if (events.All(q => q.Key != eventName))
                 return Task.FromResult(0);
-
-            var eventContext = new EventStoreContext()
-            {
-                EventId = eventId,
-                ResolvedEvent= resolvedEvent,
-                EventName = eventName
-            };
+            var eventContext = new EventStoreContext(eventId, eventName, resolvedEvent, string.Empty, events);
 
             _projectorInvoker.Invoke(eventContext);
 
             return Task.FromResult(0);
         }
-
     }
 }

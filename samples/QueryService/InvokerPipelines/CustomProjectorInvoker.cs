@@ -16,5 +16,7 @@ namespace QueryService.InvokerPipelines
                 Console.WriteLine("********************");
                 Console.WriteLine(eventContext.EventName);
         }
+
+        
     }
 }

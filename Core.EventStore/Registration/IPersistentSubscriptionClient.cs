@@ -2,6 +2,6 @@
 {
     public interface IPersistentSubscriptionClient
     {
-        void Start();
+        bool Start();
     }
 }

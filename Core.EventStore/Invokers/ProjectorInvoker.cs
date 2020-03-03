@@ -11,8 +11,6 @@ namespace Core.EventStore.Invokers
 {
     public abstract class ProjectorInvoker
     {
-
-
         public abstract void BeforeInvoke(EventStoreContext eventContext);
 
         public bool Invoke(EventStoreContext eventContext) // Guid eventId,string eventName, byte[] jsonBytes)
@@ -21,7 +19,7 @@ namespace Core.EventStore.Invokers
             
             BeforeInvoke(eventContext);
 
-            InvokeEvent(eventContext.EventId, eventContext.EventName, jsonData);
+            InvokeEvent(eventContext.EventId, eventContext.EventName, jsonData, eventContext.SubscribedEvents);
 
             AfterInvoke(eventContext);
 
@@ -29,10 +27,9 @@ namespace Core.EventStore.Invokers
         }
 
 
-        private void InvokeEvent(Guid eventId,string eventName, string jsonData)
+        private void InvokeEvent(Guid eventId,string eventName, string jsonData , Dictionary<string, object> subscribedEvents)
         {
-            var events = Autofac.SubscriptionConfiguration.Events;
-            var eventType = events.FirstOrDefault(q => q.Key == eventName);
+            var eventType = subscribedEvents.FirstOrDefault(q => q.Key == eventName);
             if (eventType.Equals(default(KeyValuePair<string, object>)))
                 return;
 

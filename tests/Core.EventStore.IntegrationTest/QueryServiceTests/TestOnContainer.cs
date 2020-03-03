@@ -19,27 +19,27 @@ namespace Core.EventStore.IntegrationTest
         [Fact]
         public async Task  Test1()
         {
-            var builder = new ContainerBuilder();
-            
-            builder.RegisterEventStore(initializationConfiguration =>
-                {
-                    initializationConfiguration.Username = "admin";
-                    initializationConfiguration.Password = "changeit";
-                    initializationConfiguration.DefaultPort = 1113;
-
-                    //initializationConfiguration.IsDockerized = true;
-                    //initializationConfiguration.DockerContainerName = "eventstore";
-
-                    initializationConfiguration.IsDockerized = false;
-                    initializationConfiguration.ConnectionUri = "127.0.0.1";
-                }, new CustomProjectorInvoker())
-                .SubscribeRead(subscriptionConfiguration =>
-                {
-                    subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
-                    subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
-                });
-            
-            
+            // var builder = new ContainerBuilder();
+            //
+            // builder.RegisterEventStore(initializationConfiguration =>
+            //     {
+            //         initializationConfiguration.Username = "admin";
+            //         initializationConfiguration.Password = "changeit";
+            //         initializationConfiguration.DefaultPort = 1113;
+            //
+            //         //initializationConfiguration.IsDockerized = true;
+            //         //initializationConfiguration.DockerContainerName = "eventstore";
+            //
+            //         initializationConfiguration.IsDockerized = false;
+            //         initializationConfiguration.ConnectionUri = "127.0.0.1";
+            //     })
+            //     .SubscribeRead(subscriptionConfiguration =>
+            //     {
+            //         subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
+            //         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
+            //     }, new CustomProjectorInvoker());
+            //
+            //
             
             
 

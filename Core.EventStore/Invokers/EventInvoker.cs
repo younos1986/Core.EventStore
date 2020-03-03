@@ -14,5 +14,7 @@ namespace Core.EventStore.Invokers
         public override void BeforeInvoke(EventStoreContext eventContext)
         {
         }
+
+       
     }
 }

@@ -11,12 +11,14 @@ namespace Core.EventStore.Dependencies
     public class EventStoreReader : IEventStoreReader
     {
 
-        readonly IEventStoreConnection _eventStoreConnection;
-        readonly ProjectorInvoker _projectorInvoker;
-        public EventStoreReader(IEventStoreConnection eventStoreConnection, ProjectorInvoker projectorInvoker)
+         readonly IEventStoreConnection _eventStoreConnection;
+         readonly ProjectorInvoker _projectorInvoker;
+         readonly SubscriptionConfiguration _subscriptionConfiguration;
+        public EventStoreReader(IEventStoreConnection eventStoreConnection, ProjectorInvoker projectorInvoker,SubscriptionConfiguration subscriptionConfiguration)
         {
             _eventStoreConnection = eventStoreConnection;
             _projectorInvoker = projectorInvoker;
+            _subscriptionConfiguration = subscriptionConfiguration;
         }
 
         public Task PerformReadStreamEventsForwardAsync(string stream, long start, int count, bool resolveLinkTos = false, Action<Guid> actionToNotifyEventIsDone = null)
@@ -30,12 +32,7 @@ namespace Core.EventStore.Dependencies
                 var jsonBytes = resolvedEvent.Event.Data;
                 var eventId = resolvedEvent.Event.EventId;
 
-                var eventContext = new EventStoreContext()
-                {
-                    EventId = eventId,
-                    ResolvedEvent = resolvedEvent,
-                    EventName = eventName
-                };
+                var eventContext = new EventStoreContext(eventId,  eventName, resolvedEvent, string.Empty ,_subscriptionConfiguration.SubscribedEvents);
 
                 _projectorInvoker.Invoke(eventContext);
 
@@ -57,12 +54,7 @@ namespace Core.EventStore.Dependencies
                 var jsonBytes = resolvedEvent.Event.Data;
                 var eventId = resolvedEvent.Event.EventId;
 
-                var eventContext = new EventStoreContext()
-                {
-                    EventId = eventId,
-                    ResolvedEvent = resolvedEvent,
-                    EventName = eventName
-                };
+                var eventContext = new EventStoreContext(eventId,  eventName, resolvedEvent, string.Empty , _subscriptionConfiguration.SubscribedEvents);
 
                 _projectorInvoker.Invoke(eventContext);
 

@@ -21,12 +21,12 @@ namespace QueryService.IoCC.Modules
 
                 initializationConfiguration.IsDockerized = false;
                 initializationConfiguration.ConnectionUri = "127.0.0.1";
-            }, new CustomProjectorInvoker())
+            })
                 .SubscribeRead(subscriptionConfiguration =>
                 {
                     subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
                     subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
-                });
+                }, new CustomProjectorInvoker());
         }
     }
 }

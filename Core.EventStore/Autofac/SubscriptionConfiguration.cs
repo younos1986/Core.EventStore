@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.EventStore.Autofac
 {
-    public class SubscriptionConfiguration
-    {
-        public static Dictionary<string, object> Events { get; set; }
 
-        public SubscriptionConfiguration()
+    public interface ISubscriptionConfiguration
+    {
+        Dictionary<string, object> SubscribedEvents { get;  }
+        void AddEvent<T>(string aliasName = null);
+    }
+
+    public class SubscriptionConfiguration : ISubscriptionConfiguration
+    {
+        //public static Dictionary<string, object> SubscribedEvents { get; private set; }
+        public Dictionary<string, object> SubscribedEvents { get; private set; }
+        public  SubscriptionConfiguration()
         {
-            Events = new Dictionary<string, object>();
+            if (SubscribedEvents == null)
+                SubscribedEvents = new Dictionary<string, object>();
         }
 
         public void AddEvent<T>(string aliasName = null)
         {
             if (string.IsNullOrWhiteSpace(aliasName))
-                Events.Add(typeof(T).Name, typeof(T));
+                SubscribedEvents.Add(typeof(T).Name, typeof(T));
             else
-                Events.Add(aliasName, typeof(T));
+                SubscribedEvents.Add(aliasName, typeof(T));
         }
-
     }
 }
