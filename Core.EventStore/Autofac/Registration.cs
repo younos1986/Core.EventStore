@@ -7,13 +7,11 @@ using Core.EventStore.Managers;
 using Core.EventStore.Registration;
 using EventStore.ClientAPI;
 using System;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.EventStore.Autofac
 {
     public static class Registration
     {
-
         public static IEventStoreConnection EventStoreConnection { get; private set; }
 
 
