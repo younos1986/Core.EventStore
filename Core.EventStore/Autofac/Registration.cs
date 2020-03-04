@@ -24,6 +24,7 @@ namespace Core.EventStore.Autofac
 
             EventStoreConnection = EventStoreConnectionBuilder.Build(configuration);
             
+            containerBuilder.RegisterInstance(configuration).As<InitializationConfiguration>().SingleInstance();
             containerBuilder.RegisterInstance(EventStoreConnection).As<IEventStoreConnection>().SingleInstance();
             containerBuilder.RegisterType<EventStoreConnectionManager>().As<IEventStoreConnectionManager>().SingleInstance();
             containerBuilder.RegisterType<PersistentSubscriptionClient>().As<IPersistentSubscriptionClient>().SingleInstance();//.PreserveExistingDefaults();

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+// [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Core.EventStore.Test")]
+
 namespace Core.EventStore.Autofac
 {
     public class InitializationConfiguration
@@ -13,5 +15,6 @@ namespace Core.EventStore.Autofac
         public bool IsDockerized { get; set; }
         public string DockerContainerName { get; set; }
         public string ConnectionUri { get; set; }
+        public string ReadonlyConnectionString { get; set; }
     }
 }
