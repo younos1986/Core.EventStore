@@ -6,6 +6,9 @@
 A library to facilitate communication between CommandService and QueryService. The Idea is when any event occures in commandService, it should be persisted in QueryService in MongoDb
 
 
+<img src="https://raw.githubusercontent.com/younos1986/Core.EventStore/master/images/what_it_does.png" />
+
+
 - CommandService only keeps events in EventStore
 - QueryService's Projectors will be trigered when any event is stored in EventStore by CommandService
 
