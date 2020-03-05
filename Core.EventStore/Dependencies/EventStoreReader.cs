@@ -3,67 +3,73 @@ using Core.EventStore.Invokers;
 using EventStore.ClientAPI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Core.Lifetime;
+using Core.EventStore.Services;
 
 namespace Core.EventStore.Dependencies
 {
     public class EventStoreReader : IEventStoreReader
     {
-
-         readonly IEventStoreConnection _eventStoreConnection;
-         readonly ProjectorInvoker _projectorInvoker;
-         readonly SubscriptionConfiguration _subscriptionConfiguration;
-        public EventStoreReader(IEventStoreConnection eventStoreConnection, ProjectorInvoker projectorInvoker,SubscriptionConfiguration subscriptionConfiguration)
+        readonly IEventStoreConnection _eventStoreConnection;
+        readonly ProjectorInvoker _projectorInvoker;
+        readonly ISubscriptionConfiguration _subscriptionConfiguration;
+        private IPositionReaderService _positionReaderService;
+        private ILifetimeScope _container;
+        public EventStoreReader(IEventStoreConnection eventStoreConnection, ProjectorInvoker projectorInvoker,
+            ISubscriptionConfiguration subscriptionConfiguration,
+            IPositionReaderService positionReaderService,
+            ILifetimeScope container)
         {
             _eventStoreConnection = eventStoreConnection;
             _projectorInvoker = projectorInvoker;
             _subscriptionConfiguration = subscriptionConfiguration;
+            _positionReaderService = positionReaderService;
+            _container = container;
         }
 
-        public Task PerformReadStreamEventsForwardAsync(string stream, long start, int count, bool resolveLinkTos = false, Action<Guid> actionToNotifyEventIsDone = null)
+        public async Task PerformAllRegisteredEvents(Action<Guid> actionToNotifyEventIsDone = null)
         {
-            var events = _eventStoreConnection.ReadStreamEventsForwardAsync(stream, start, count, resolveLinkTos).GetAwaiter().GetResult();
-            foreach (var resolvedEvent in events.Events)
+            var subscribedEvents = _subscriptionConfiguration.SubscribedEvents;
+            int count = 4096;
+            bool resolveLinkTos = false;
+            foreach (var registeredEvent in subscribedEvents.Keys)
             {
-                Encoding.UTF8.GetString(resolvedEvent.Event.Data);
+                var currentposition = await _positionReaderService.GetCurrentPosition();
+                var retrievedEvents = await _eventStoreConnection.ReadStreamEventsForwardAsync(registeredEvent, currentposition.CommitPosition, count, resolveLinkTos);
+                PerformEventHandlerInvoke(actionToNotifyEventIsDone, retrievedEvents.Events);
+            }
+        }
+        
+        public async Task PerformAll(Action<Guid> actionToNotifyEventIsDone = null)
+        {
+            var currentposition = await _positionReaderService.GetCurrentPosition();
+            var position = new Position(currentposition.CommitPosition, currentposition.PreparePosition);
+            var maxCount = 4096;
 
+            var retrievedEvents = await _eventStoreConnection.ReadAllEventsForwardAsync(position, maxCount, false);
+            
+            PerformEventHandlerInvoke(actionToNotifyEventIsDone, retrievedEvents.Events);
+        }
+
+        private void PerformEventHandlerInvoke(Action<Guid> actionToNotifyEventIsDone, ResolvedEvent[] events)
+        {
+            foreach (var resolvedEvent in events)
+            {
                 var eventName = resolvedEvent.Event.EventStreamId;
                 var jsonBytes = resolvedEvent.Event.Data;
                 var eventId = resolvedEvent.Event.EventId;
-
-                var eventContext = new EventStoreContext(eventId,  eventName, resolvedEvent, string.Empty ,_subscriptionConfiguration.SubscribedEvents);
+                
+                var eventContext = new EventStoreContext(eventId, eventName, resolvedEvent, string.Empty, _subscriptionConfiguration.SubscribedEvents, _container);
 
                 _projectorInvoker.Invoke(eventContext);
 
                 if (actionToNotifyEventIsDone != null)
                     actionToNotifyEventIsDone(resolvedEvent.Event.EventId);
             }
-
-            return Task.FromResult(0);
         }
-
-        public Task PerformAll(Action<Guid> actionToNotifyEventIsDone = null)
-        {
-            var events = _eventStoreConnection.ReadStreamEventsForwardAsync("", 0, int.MaxValue, false).GetAwaiter().GetResult();
-            foreach (var resolvedEvent in events.Events)
-            {
-                Encoding.UTF8.GetString(resolvedEvent.Event.Data);
-
-                var eventName = resolvedEvent.Event.EventStreamId;
-                var jsonBytes = resolvedEvent.Event.Data;
-                var eventId = resolvedEvent.Event.EventId;
-
-                var eventContext = new EventStoreContext(eventId,  eventName, resolvedEvent, string.Empty , _subscriptionConfiguration.SubscribedEvents);
-
-                _projectorInvoker.Invoke(eventContext);
-
-                if (actionToNotifyEventIsDone != null)
-                    actionToNotifyEventIsDone(resolvedEvent.Event.EventId);
-            }
-
-            return Task.FromResult(0);
-        }
-
     }
 }

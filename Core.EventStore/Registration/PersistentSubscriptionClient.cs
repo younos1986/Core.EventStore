@@ -8,7 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Managers;
+using Core.EventStore.Positions;
+using Core.EventStore.Services;
 
 namespace Core.EventStore.Registration
 {
@@ -18,17 +21,20 @@ namespace Core.EventStore.Registration
         private readonly IEventStoreConnectionManager _eventStoreConnectionManager;
         private readonly ProjectorInvoker _projectorInvoker;
         private ISubscriptionConfiguration _subscriptionConfiguration;
+        private readonly  ILifetimeScope _container;
 
         public PersistentSubscriptionClient(
             IEventStoreConnection eventStoreConnection,
             ProjectorInvoker projectorInvoker,
             IEventStoreConnectionManager eventStoreConnectionManager,
-            ISubscriptionConfiguration subscriptionConfiguration)
+            ISubscriptionConfiguration subscriptionConfiguration,
+            ILifetimeScope  container)
         {
             _eventStoreConnection = eventStoreConnection;
             _projectorInvoker = projectorInvoker;
             _eventStoreConnectionManager = eventStoreConnectionManager;
             _subscriptionConfiguration = subscriptionConfiguration;
+            _container = container;
         }
 
         private static readonly UserCredentials User = new UserCredentials("admin", "changeit");
@@ -107,11 +113,15 @@ namespace Core.EventStore.Registration
             var events = _subscriptionConfiguration.SubscribedEvents;
             if (events.All(q => q.Key != eventName))
                 return Task.FromResult(0);
-            var eventContext = new EventStoreContext(eventId, eventName, resolvedEvent, string.Empty, events);
+            var eventContext = new EventStoreContext(eventId, eventName, resolvedEvent, string.Empty, events, _container);
 
             _projectorInvoker.Invoke(eventContext);
 
+           
+
             return Task.FromResult(0);
         }
+
+       
     }
 }

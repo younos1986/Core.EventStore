@@ -7,8 +7,8 @@ namespace Core.EventStore.Dependencies
 {
     public  interface IEventStoreReader
     {
-        Task PerformReadStreamEventsForwardAsync(string stream, long start, int count, bool resolveLinkTos = false, Action<Guid> actionToNotifyEventIsDone = null);
-
+        Task PerformAllRegisteredEvents(Action<Guid> actionToNotifyEventIsDone = null);
         Task PerformAll(Action<Guid> actionToNotifyEventIsDone = null);
+        
     }
 }

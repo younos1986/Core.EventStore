@@ -8,6 +8,7 @@
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="EventStore.Client" Version="5.0.6" />
     <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.2" />
   </ItemGroup>
 
@@ -15,6 +16,10 @@
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
       <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.1.0\ref\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\samples\IntegrationEvents\IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

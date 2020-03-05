@@ -2,10 +2,16 @@
 using Core.EventStore.Contracts;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
+using Autofac;
+using Core.EventStore.IdempotencyServices;
+using Core.EventStore.Positions;
+using Core.EventStore.Services;
 
 namespace Core.EventStore.Invokers
 {
@@ -13,40 +19,67 @@ namespace Core.EventStore.Invokers
     {
         public abstract void BeforeInvoke(EventStoreContext eventContext);
 
-        public bool Invoke(EventStoreContext eventContext) // Guid eventId,string eventName, byte[] jsonBytes)
+        public bool Invoke(EventStoreContext eventContext)
         {
-            var jsonData = Encoding.ASCII.GetString(eventContext.ResolvedEvent.Event.Data);
+            if (eventContext.SubscribedEvents.All(q => q.Key != eventContext.EventName))
+                return false;
             
-            BeforeInvoke(eventContext);
+            if (IsProcessedBefore(eventContext)) return false;
 
-            InvokeEvent(eventContext.EventId, eventContext.EventName, jsonData, eventContext.SubscribedEvents);
+            BeforeInvoke(eventContext);
+            InvokeEvent(eventContext);
+
+            PersistPositionAsync(eventContext).GetAwaiter();
+            PersistIdempotencyAsync(eventContext).GetAwaiter();
 
             AfterInvoke(eventContext);
 
             return true;
         }
 
-
-        private void InvokeEvent(Guid eventId,string eventName, string jsonData , Dictionary<string, object> subscribedEvents)
+        private static bool IsProcessedBefore(EventStoreContext eventContext)
         {
-            var eventType = subscribedEvents.FirstOrDefault(q => q.Key == eventName);
+            var idempotencyReaderService = eventContext.Container.ResolveOptional<IIdempotencyReaderService>();
+            if (idempotencyReaderService == null)
+                return false;
+
+            var isProcessedBefore = idempotencyReaderService.IsProcessedBefore(eventContext.EventId).GetAwaiter()
+                .GetResult();
+            return isProcessedBefore;
+        }
+
+        private void InvokeEvent(EventStoreContext eventContext)
+        {
+            var jsonData = Encoding.ASCII.GetString(eventContext.ResolvedEvent.Event.Data);
+
+            var eventType = eventContext.SubscribedEvents.FirstOrDefault(q => q.Key == eventContext.EventName);
             if (eventType.Equals(default(KeyValuePair<string, object>)))
                 return;
 
-            var obj = eventType.Value;
+            Type enumerableType = typeof(IEnumerable<>);
+            Type projectorType = typeof(IProjector<>);
+            Type type = ((Type) eventType.Value);
+            Type genericType = projectorType.MakeGenericType(type);
+            var enumerableGenericType = enumerableType.MakeGenericType(genericType);
 
-            var allProjectors = GetAllTypesImplementingOpenGenericType(typeof(IProjector<>));
-            var objName = ((Type)obj).Name;
-            var handlerObject = allProjectors.FirstOrDefault(q => q.Name == objName + "EventProjector");
+            var resolvedType = eventContext.Container.Resolve(enumerableGenericType);
 
-            object projectorInstance = Activator.CreateInstance(handlerObject);
-            var handlerMethodInfo = projectorInstance.GetType().GetMethod("HandleAsync");
+            var enumerator = ((IEnumerable) resolvedType).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var currentProjectorClass = enumerator.Current;
+                if (currentProjectorClass == null)
+                    continue;
 
-            var parameterInfo = handlerMethodInfo.GetParameters().FirstOrDefault();
+                var handlerMethodInfo = currentProjectorClass.GetType().GetMethod("HandleAsync");
+                if (handlerMethodInfo == null)
+                    throw new Exception("The Projector class doesn't have a HandleAsync method");
 
-            object deserializedJsonObject = DeserializeObject(jsonData, parameterInfo);
+                var parameterInfo = handlerMethodInfo.GetParameters().FirstOrDefault();
+                object deserializedJsonObject = DeserializeObject(jsonData, parameterInfo);
 
-            handlerMethodInfo.Invoke(projectorInstance, new object[] { deserializedJsonObject });
+                handlerMethodInfo.Invoke(currentProjectorClass, new object[] {deserializedJsonObject});
+            }
         }
 
         private static object DeserializeObject(string data, ParameterInfo parameterInfo)
@@ -59,6 +92,7 @@ namespace Core.EventStore.Invokers
 
         static List<Type> types = new List<Type>();
         private static object lockObject = new object();
+
         private List<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType)
         {
             if (types.Any())
@@ -71,21 +105,67 @@ namespace Core.EventStore.Invokers
                 foreach (var assm in assemblies)
                 {
                     var query = from x in assm.GetTypes()
-                                from z in x.GetInterfaces()
-                                let y = x.BaseType
-                                where
-                                (y != null && y.IsGenericType &&
-                                openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition())) ||
-                                (z.IsGenericType &&
-                                openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition()))
-                                select x;
+                        from z in x.GetInterfaces()
+                        let y = x.BaseType
+                        where
+                            (y != null && y.IsGenericType &&
+                             openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition())) ||
+                            (z.IsGenericType &&
+                             openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition()))
+                        select x;
 
                     var res = query.ToList();
                     tempTypes.AddRange(res);
                 }
+
                 types = tempTypes;
             }
+
             return types;
+        }
+
+        private async Task PersistPositionAsync(EventStoreContext container)
+        {
+            try
+            {
+                var positionWriteService = container.Container.ResolveOptional<IPositionWriteService>();
+                if (positionWriteService == null)
+                    return;
+
+                var position = new EventStorePosition()
+                {
+                    Id = container.ResolvedEvent.Event.EventId,
+                    CommitPosition = container.ResolvedEvent.OriginalPosition.Value.CommitPosition,
+                    PreparePosition = container.ResolvedEvent.OriginalPosition.Value.PreparePosition,
+                    CreatedOn = DateTime.UtcNow,
+                };
+                await positionWriteService.InsertOneAsync(position);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private async Task PersistIdempotencyAsync(EventStoreContext container)
+        {
+            try
+            {
+                var idempotencyWriterService = container.Container.ResolveOptional<IIdempotencyWriterService>();
+                if (idempotencyWriterService == null)
+                    return;
+
+                var eventStoreIdempotency = new EventStoreIdempotency()
+                {
+                    Id = container.ResolvedEvent.Event.EventId,
+                    CreatedOn = DateTime.UtcNow,
+                };
+                await idempotencyWriterService.PersistIdempotencyAsync(eventStoreIdempotency);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }
