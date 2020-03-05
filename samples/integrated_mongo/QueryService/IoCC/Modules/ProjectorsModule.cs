@@ -11,7 +11,6 @@ namespace QueryService.IoCC.Modules
         {
             builder.RegisterType<CustomerCreatedEventProjector>().As<IProjector<CustomerCreated>>();
             builder.RegisterType<CustomerInsertedEventProjector>().As<IProjector<CustomerCreated>>();
-            
         }
     }
 }

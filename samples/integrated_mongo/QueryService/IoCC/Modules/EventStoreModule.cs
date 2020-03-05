@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Core.EventStore.Autofac;
 using IntegrationEvents;
 using QueryService.InvokerPipelines;

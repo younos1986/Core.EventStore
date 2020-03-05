@@ -18,8 +18,6 @@ namespace CommandService.IoCC.Modules
                 initializationConfiguration.IsDockerized = false;
                 initializationConfiguration.ConnectionUri = "127.0.0.1";
             });
-
         }
-
     }
 }

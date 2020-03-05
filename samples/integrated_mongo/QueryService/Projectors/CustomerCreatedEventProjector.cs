@@ -1,8 +1,5 @@
 ﻿using Core.EventStore.Contracts;
 using IntegrationEvents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using QueryService.MongoDbConfigs;
 
@@ -18,7 +15,6 @@ namespace QueryService.Projectors
         
         public async Task HandleAsync(CustomerCreated integrationEvent)
         {
-
             await _mongoDb.InsertOneAsync(integrationEvent);
         }
     }
