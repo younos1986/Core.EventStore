@@ -1,8 +1,6 @@
 # Core.EventStore
 
 ![.NET Core](https://github.com/younos1986/Core.EventStore/workflows/.NET%20Core/badge.svg)
-
-<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore Nuget Package <a/>
  
 
 A library to facilitate communication between CommandService and QueryService. The Idea is when any event occures in commandService, it should be persisted in QueryService in MongoDb
@@ -14,6 +12,10 @@ A library to facilitate communication between CommandService and QueryService. T
 - CommandService only keeps events in EventStore
 - QueryService's Projectors will be triggered when any event is stored in EventStore by CommandService
 
+
+# Nuget
+
+<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore Nuget Package <a/>
 
 
 # Features
