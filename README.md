@@ -18,6 +18,12 @@ A library to facilitate communication between CommandService and QueryService. T
 * Define multiple projectors for one event
 
 
+# Dependencies
+
+* Autofac Version="5.1.2"
+* EventStore.Client Version="5.0.6"
+* MongoDB.Driver Version="2.10.0"
+
 # How to use 
 
 In CommandService
@@ -117,7 +123,7 @@ namespace QueryService.IoCC.Modules
 
 
 
-Then persist occured event 
+Then persist occured event in CommandService
 ```
 
 using System;
@@ -161,7 +167,7 @@ namespace CommandService.CommandHandlers
 ```
 
 
-Then Projector in QueryService will be trigered
+Then Projectors in QueryService will be trigered
 
 ```
 using Core.EventStore.Contracts;
@@ -187,6 +193,7 @@ namespace QueryService.Projectors
 }
 
 ```
+
 
 
 
