@@ -10,7 +10,7 @@ A library to facilitate communication between CommandService and QueryService. T
 
 
 - CommandService only keeps events in EventStore
-- QueryService's Projectors will be trigered when any event is stored in EventStore by CommandService
+- QueryService's Projectors will be triggered when any event is stored in EventStore by CommandService
 
 
 
@@ -170,7 +170,8 @@ namespace CommandService.CommandHandlers
 ```
 
 
-Then Projectors in QueryService will be trigered
+Then Projectors in QueryService will be triggered
+
 
 ```
 using Core.EventStore.Contracts;
