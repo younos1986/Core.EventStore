@@ -15,7 +15,11 @@ A library to facilitate communication between CommandService and QueryService. T
 
 # Nuget
 
-<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore Nuget Package <a/>
+<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore <a/>
+ 
+<a href="https://www.nuget.org/packages/Core.EventStore.Mongo/"> Core.EventStore.Mongo <a/>
+ 
+<a href="https://www.nuget.org/packages/Core.EventStore.EFCore/"> Core.EventStore.EFCore <a/>
 
 
 
@@ -28,9 +32,18 @@ A library to facilitate communication between CommandService and QueryService. T
 
 # Dependencies
 
-* Autofac Version="5.1.2"
-* EventStore.Client Version="5.0.6"
-* MongoDB.Driver Version="2.10.0"
+.NETStandard 2.1
+
+Autofac (>= 5.1.2)
+
+EventStore.Client (>= 5.0.6)
+
+MediatR (>= 7.0.0)
+
+Microsoft.Extensions.Configuration.Abstractions (>= 3.1.2)
+
+MongoDB.Driver (>= 2.10.0)
+
 
 # How to use 
 
