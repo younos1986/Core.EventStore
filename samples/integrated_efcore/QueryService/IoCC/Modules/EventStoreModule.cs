@@ -29,7 +29,7 @@ namespace QueryService.IoCC.Modules
                     }, new CustomProjectorInvoker())
                     .KeepPositionInEfCore(configuration =>
                     {
-                        configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=AAAaaa123!@#;Max Pool Size=80;";
+                        configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;";
                         configuration.DefaultSchema = "dbo";
                     })
                     .KeepIdempotenceInEfCore();

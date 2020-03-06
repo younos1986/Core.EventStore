@@ -20,7 +20,7 @@ namespace Core.EventStore.EFCore.Autofac
         
         public string IdempotenceTableName { get; set; } = "Idempotences";
 
-        public string DefaultSchema { get; set; } = "es";
+        public string DefaultSchema { get; set; } = "dbo";
 
         
     }

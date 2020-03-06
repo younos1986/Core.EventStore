@@ -7,59 +7,33 @@ using QueryService.InvokerPipelines;
 
 namespace QueryService.IoCC.Modules
 {
-        public class EventStoreModule : Module
+    public class EventStoreModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
         {
-            protected override void Load(ContainerBuilder builder)
+            builder.RegisterEventStore(initializationConfiguration =>
             {
-                // builder.RegisterEventStore(initializationConfiguration =>
-                // {
-                //     initializationConfiguration.Username = "admin";
-                //     initializationConfiguration.Password = "changeit";
-                //     initializationConfiguration.DefaultPort = 1113;
-                //
-                //     //initializationConfiguration.IsDockerized = true;
-                //     //initializationConfiguration.DockerContainerName = "eventstore";
-                //
-                //     initializationConfiguration.IsDockerized = false;
-                //     initializationConfiguration.ConnectionUri = "127.0.0.1";
-                // })
-                //     .SubscribeRead(subscriptionConfiguration =>
-                //     {
-                //         subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
-                //         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
-                //     }, new CustomProjectorInvoker())
-                //     .KeepPositionInMongo(configuration =>
-                //         {
-                //             configuration.ConnectionString = "mongodb://127.0.0.1";
-                //             configuration.DatabaseName = "TestDB";
-                //         })
-                //     .KeepIdempotenceInMongo();
-                
-                
-                
-                builder.RegisterEventStore(initializationConfiguration =>
+                initializationConfiguration.Username = "admin";
+                initializationConfiguration.Password = "changeit";
+                initializationConfiguration.DefaultPort = 1113;
+            
+                //initializationConfiguration.IsDockerized = true;
+                //initializationConfiguration.DockerContainerName = "eventstore";
+            
+                initializationConfiguration.IsDockerized = false;
+                initializationConfiguration.ConnectionUri = "127.0.0.1";
+            })
+                .SubscribeRead(subscriptionConfiguration =>
+                {
+                    subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
+                    subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
+                }, new CustomProjectorInvoker())
+                .KeepPositionInMongo(configuration =>
                     {
-                        initializationConfiguration.Username = "admin";
-                        initializationConfiguration.Password = "changeit";
-                        initializationConfiguration.DefaultPort = 1113;
-
-                        //initializationConfiguration.IsDockerized = true;
-                        //initializationConfiguration.DockerContainerName = "eventstore";
-
-                        initializationConfiguration.IsDockerized = false;
-                        initializationConfiguration.ConnectionUri = "127.0.0.1";
+                        configuration.ConnectionString = "mongodb://127.0.0.1";
+                        configuration.DatabaseName = "TestDB";
                     })
-                    .SubscribeRead(subscriptionConfiguration =>
-                    {
-                        subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
-                        subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
-                    }, new CustomProjectorInvoker())
-                    .KeepPositionInEfCore(configuration =>
-                    {
-                        configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=AAAaaa123!@#;Max Pool Size=80;";
-                        configuration.DefaultSchema = "dbo";
-                    })
-                    .KeepIdempotenceInEfCore();
-            }
+                .KeepIdempotenceInMongo();
         }
     }
+}
