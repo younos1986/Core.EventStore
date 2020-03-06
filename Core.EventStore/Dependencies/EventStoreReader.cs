@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core.Lifetime;
-using Core.EventStore.Services;
+using Core.EventStore.Configurations;
+using Core.EventStore.Contracts;
 
 namespace Core.EventStore.Dependencies
 {

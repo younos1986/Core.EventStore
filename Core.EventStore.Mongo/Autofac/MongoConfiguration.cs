@@ -1,15 +1,13 @@
 ﻿using System;
-using Core.EventStore.IdempotencyServices;
-using Core.EventStore.Positions;
-using Core.EventStore.Services;
+using Core.EventStore.Configurations;
 using MongoDB.Driver;
 
-namespace Core.EventStore.Autofac
+namespace Core.EventStore.Mongo.Autofac
 {
     public interface IMongoConfiguration
     {
         IMongoCollection<EventStorePosition> GetPositionCollection { get; }
-        IMongoCollection<EventStoreIdempotency> GetIdempotencyCollection { get; }
+        IMongoCollection<EventStoreIdempotence> GetIdempotenceCollection { get; }
         
 
         string ConnectionString { get; set; }
@@ -24,7 +22,7 @@ namespace Core.EventStore.Autofac
         
         public string PositionCollectionName { get; set; } = "Positions";
         
-        public string IdempotencyCollectionName { get; set; } = "Idempotencies";
+        public string IdempotenceCollectionName { get; set; } = "Idempotencies";
 
 
         public IMongoCollection<EventStorePosition> GetPositionCollection
@@ -36,11 +34,11 @@ namespace Core.EventStore.Autofac
             }
         }
         
-        public IMongoCollection<EventStoreIdempotency> GetIdempotencyCollection
+        public IMongoCollection<EventStoreIdempotence> GetIdempotenceCollection
         {
             get
             {
-                var collection = MongoDatabase.GetCollection<EventStoreIdempotency>(IdempotencyCollectionName);
+                var collection = MongoDatabase.GetCollection<EventStoreIdempotence>(IdempotenceCollectionName);
                 return collection;
             }
         }

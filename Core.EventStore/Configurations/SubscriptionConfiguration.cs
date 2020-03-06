@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using System.Collections.Generic;
 
-namespace Core.EventStore.Autofac
+namespace Core.EventStore.Configurations
 {
 
     public interface ISubscriptionConfiguration

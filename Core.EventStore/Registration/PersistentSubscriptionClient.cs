@@ -9,9 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using Core.EventStore.Configurations;
 using Core.EventStore.Managers;
-using Core.EventStore.Positions;
-using Core.EventStore.Services;
 
 namespace Core.EventStore.Registration
 {

@@ -1,8 +1,7 @@
-﻿using EventStore.ClientAPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Autofac;
+using EventStore.ClientAPI;
 
 namespace Core.EventStore.Autofac
 {

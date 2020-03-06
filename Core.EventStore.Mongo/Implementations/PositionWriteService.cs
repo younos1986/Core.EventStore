@@ -1,15 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Core.EventStore.Autofac;
-using Core.EventStore.Positions;
+using Core.EventStore.Configurations;
+using Core.EventStore.Contracts;
+using Core.EventStore.Mongo.Autofac;
 using MongoDB.Driver;
 
-namespace Core.EventStore.Services
+namespace Core.EventStore.Mongo.Implementations
 {
-    public interface IPositionWriteService
-    {
-        Task InsertOneAsync(EventStorePosition entity);
-    }
-
     public class PositionWriteService: IPositionWriteService
     {
         private readonly IMongoConfiguration _mongoConfiguration; 

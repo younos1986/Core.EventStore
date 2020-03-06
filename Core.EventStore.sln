@@ -25,6 +25,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandService", "samples\i
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryService", "samples\integrated_mongo\QueryService\QueryService.csproj", "{CC07887E-86A7-46C8-BE33-ACA42756AD6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.Mongo", "Core.EventStore.Mongo\Core.EventStore.Mongo.csproj", "{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore", "Core.EventStore.EFCore\Core.EventStore.EFCore.csproj", "{E1F75120-4C84-4772-B107-A0EAD460E2BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.MySql", "Core.EventStore.MySql\Core.EventStore.MySql.csproj", "{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integrated_efcore", "integrated_efcore", "{456ACFC4-F6BF-4471-9890-B59F25A31155}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandService", "samples\integrated_efcore\CommandService\CommandService.csproj", "{E53F74FE-1C21-4255-AAE7-A845645C35D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryService", "samples\integrated_efcore\QueryService\QueryService.csproj", "{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +71,26 @@ Global
 		{CC07887E-86A7-46C8-BE33-ACA42756AD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC07887E-86A7-46C8-BE33-ACA42756AD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC07887E-86A7-46C8-BE33-ACA42756AD6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F75120-4C84-4772-B107-A0EAD460E2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F75120-4C84-4772-B107-A0EAD460E2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F75120-4C84-4772-B107-A0EAD460E2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F75120-4C84-4772-B107-A0EAD460E2BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E53F74FE-1C21-4255-AAE7-A845645C35D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53F74FE-1C21-4255-AAE7-A845645C35D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E53F74FE-1C21-4255-AAE7-A845645C35D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E53F74FE-1C21-4255-AAE7-A845645C35D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +104,9 @@ Global
 		{936B86FC-6869-445C-95A0-16AD0BB4BF35} = {0E0BCA44-E371-4FAE-882A-519BAC7AAB47}
 		{216525D4-00CE-4065-8A90-46A8828CBF3F} = {936B86FC-6869-445C-95A0-16AD0BB4BF35}
 		{CC07887E-86A7-46C8-BE33-ACA42756AD6D} = {936B86FC-6869-445C-95A0-16AD0BB4BF35}
+		{456ACFC4-F6BF-4471-9890-B59F25A31155} = {0E0BCA44-E371-4FAE-882A-519BAC7AAB47}
+		{E53F74FE-1C21-4255-AAE7-A845645C35D4} = {456ACFC4-F6BF-4471-9890-B59F25A31155}
+		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419} = {456ACFC4-F6BF-4471-9890-B59F25A31155}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4111EE0-9B47-40FA-998C-D3A0F0CE07B1}

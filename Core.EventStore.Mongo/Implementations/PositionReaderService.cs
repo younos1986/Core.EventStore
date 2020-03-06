@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Core.EventStore.Autofac;
-using Core.EventStore.Positions;
+using Core.EventStore.Configurations;
+using Core.EventStore.Contracts;
+using Core.EventStore.IdGeneration;
+using Core.EventStore.Mongo.Autofac;
 using EventStore.ClientAPI;
 using MongoDB.Driver;
 
-namespace Core.EventStore.Services
+namespace Core.EventStore.Mongo.Implementations
 {
-    public interface IPositionReaderService
-    {
-        Task<EventStorePosition> GetCurrentPosition();
-    }
-    
     public class PositionReaderService: IPositionReaderService
     {
         private readonly IMongoConfiguration _mongoConfiguration; 
@@ -41,7 +39,7 @@ namespace Core.EventStore.Services
         {
             var defaultPosition =new EventStorePosition()
             {
-                Id = Guid.NewGuid(),
+                Id = CombGuid.Generate(),
                 CommitPosition = Position.Start.CommitPosition,
                 PreparePosition =Position.Start.PreparePosition, 
                 CreatedOn = DateTime.UtcNow,

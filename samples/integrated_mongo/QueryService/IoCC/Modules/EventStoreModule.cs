@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Core.EventStore.Autofac;
+using Core.EventStore.EFCore.Autofac;
+using Core.EventStore.Mongo.Autofac;
 using IntegrationEvents;
 using QueryService.InvokerPipelines;
 
@@ -9,29 +11,55 @@ namespace QueryService.IoCC.Modules
         {
             protected override void Load(ContainerBuilder builder)
             {
+                // builder.RegisterEventStore(initializationConfiguration =>
+                // {
+                //     initializationConfiguration.Username = "admin";
+                //     initializationConfiguration.Password = "changeit";
+                //     initializationConfiguration.DefaultPort = 1113;
+                //
+                //     //initializationConfiguration.IsDockerized = true;
+                //     //initializationConfiguration.DockerContainerName = "eventstore";
+                //
+                //     initializationConfiguration.IsDockerized = false;
+                //     initializationConfiguration.ConnectionUri = "127.0.0.1";
+                // })
+                //     .SubscribeRead(subscriptionConfiguration =>
+                //     {
+                //         subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
+                //         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
+                //     }, new CustomProjectorInvoker())
+                //     .KeepPositionInMongo(configuration =>
+                //         {
+                //             configuration.ConnectionString = "mongodb://127.0.0.1";
+                //             configuration.DatabaseName = "TestDB";
+                //         })
+                //     .KeepIdempotenceInMongo();
+                
+                
+                
                 builder.RegisterEventStore(initializationConfiguration =>
-                {
-                    initializationConfiguration.Username = "admin";
-                    initializationConfiguration.Password = "changeit";
-                    initializationConfiguration.DefaultPort = 1113;
+                    {
+                        initializationConfiguration.Username = "admin";
+                        initializationConfiguration.Password = "changeit";
+                        initializationConfiguration.DefaultPort = 1113;
 
-                    //initializationConfiguration.IsDockerized = true;
-                    //initializationConfiguration.DockerContainerName = "eventstore";
+                        //initializationConfiguration.IsDockerized = true;
+                        //initializationConfiguration.DockerContainerName = "eventstore";
 
-                    initializationConfiguration.IsDockerized = false;
-                    initializationConfiguration.ConnectionUri = "127.0.0.1";
-                })
+                        initializationConfiguration.IsDockerized = false;
+                        initializationConfiguration.ConnectionUri = "127.0.0.1";
+                    })
                     .SubscribeRead(subscriptionConfiguration =>
                     {
                         subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
                         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
                     }, new CustomProjectorInvoker())
-                    .KeepPositionInMongo(configuration =>
-                        {
-                            configuration.ConnectionString = "mongodb://127.0.0.1";
-                            configuration.DatabaseName = "TestDB";
-                        })
-                    .KeepIdempotencyInMongo();
+                    .KeepPositionInEfCore(configuration =>
+                    {
+                        configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=AAAaaa123!@#;Max Pool Size=80;";
+                        configuration.DefaultSchema = "dbo";
+                    })
+                    .KeepIdempotenceInEfCore();
             }
         }
     }

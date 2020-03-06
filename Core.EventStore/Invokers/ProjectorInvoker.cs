@@ -9,9 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Core.EventStore.IdempotencyServices;
-using Core.EventStore.Positions;
-using Core.EventStore.Services;
+using Core.EventStore.Configurations;
 
 namespace Core.EventStore.Invokers
 {
@@ -30,7 +28,7 @@ namespace Core.EventStore.Invokers
             InvokeEvent(eventContext);
 
             PersistPositionAsync(eventContext).GetAwaiter();
-            PersistIdempotencyAsync(eventContext).GetAwaiter();
+            PersistIdempotenceAsync(eventContext).GetAwaiter();
 
             AfterInvoke(eventContext);
 
@@ -39,11 +37,11 @@ namespace Core.EventStore.Invokers
 
         private static bool IsProcessedBefore(EventStoreContext eventContext)
         {
-            var idempotencyReaderService = eventContext.Container.ResolveOptional<IIdempotencyReaderService>();
-            if (idempotencyReaderService == null)
+            var IdempotenceReaderService = eventContext.Container.ResolveOptional<IIdempotenceReaderService>();
+            if (IdempotenceReaderService == null)
                 return false;
 
-            var isProcessedBefore = idempotencyReaderService.IsProcessedBefore(eventContext.EventId).GetAwaiter()
+            var isProcessedBefore = IdempotenceReaderService.IsProcessedBefore(eventContext.EventId).GetAwaiter()
                 .GetResult();
             return isProcessedBefore;
         }
@@ -147,20 +145,20 @@ namespace Core.EventStore.Invokers
             }
         }
 
-        private async Task PersistIdempotencyAsync(EventStoreContext container)
+        private async Task PersistIdempotenceAsync(EventStoreContext container)
         {
             try
             {
-                var idempotencyWriterService = container.Container.ResolveOptional<IIdempotencyWriterService>();
-                if (idempotencyWriterService == null)
+                var IdempotenceWriterService = container.Container.ResolveOptional<IIdempotenceWriterService>();
+                if (IdempotenceWriterService == null)
                     return;
 
-                var eventStoreIdempotency = new EventStoreIdempotency()
+                var eventStoreIdempotence = new EventStoreIdempotence()
                 {
                     Id = container.ResolvedEvent.Event.EventId,
                     CreatedOn = DateTime.UtcNow,
                 };
-                await idempotencyWriterService.PersistIdempotencyAsync(eventStoreIdempotency);
+                await IdempotenceWriterService.PersistIdempotenceAsync(eventStoreIdempotence);
             }
             catch (Exception e)
             {

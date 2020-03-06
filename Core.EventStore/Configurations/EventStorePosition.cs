@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Reflection;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Core.EventStore.Positions
+namespace Core.EventStore.Configurations
 {
     [BsonIgnoreExtraElements]
     public class EventStorePosition

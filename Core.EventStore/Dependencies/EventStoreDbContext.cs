@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Core.EventStore.IdGeneration;
 
 namespace Core.EventStore.Dependencies
 {
@@ -18,18 +19,18 @@ namespace Core.EventStore.Dependencies
             _eventStoreConnection = eventStoreConnection;
         }
 
-        public async Task AppendToStreamAsync<T>(T command,Guid? eventId=null)
+        public async Task AppendToStreamAsync<T>(T command, Guid? eventId = null)
         {
             string commandName = command.GetType().Name;
             string jsonData = JsonConvert.SerializeObject(command);
             byte[] dataBytes = Encoding.UTF8.GetBytes(jsonData);
 
             EventData eventData = new EventData(
-                eventId: eventId ?? Guid.NewGuid(),
-                   type: commandName,
-                   isJson: true,
-                   data: dataBytes,
-                   metadata: null);
+                eventId: eventId ?? CombGuid.Generate(),
+                type: commandName,
+                isJson: true,
+                data: dataBytes,
+                metadata: null);
 
 
             string streamName = command.GetType().Name;
@@ -43,9 +44,5 @@ namespace Core.EventStore.Dependencies
         {
             await _eventStoreConnection.AppendToStreamAsync(streamName, ExpectedVersion.Any, events);
         }
-
-
-       
     }
-
 }

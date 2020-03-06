@@ -1,10 +1,10 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Core.EventStore.IdempotencyServices
+namespace Core.EventStore.Configurations
 {
     [BsonIgnoreExtraElements]
-    public class EventStoreIdempotency
+    public class EventStoreIdempotence
     {
         public Guid Id  { get; set; }
         public DateTime CreatedOn  { get; set; }

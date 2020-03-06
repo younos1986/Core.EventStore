@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 // [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Core.EventStore.Test")]
 
-namespace Core.EventStore.Autofac
+namespace Core.EventStore.Configurations
 {
     public class InitializationConfiguration
     {

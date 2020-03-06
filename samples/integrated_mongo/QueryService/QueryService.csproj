@@ -11,6 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Core.EventStore.EFCore\Core.EventStore.EFCore.csproj" />
+      <ProjectReference Include="..\..\..\Core.EventStore.Mongo\Core.EventStore.Mongo.csproj" />
       <ProjectReference Include="..\..\..\Core.EventStore\Core.EventStore.csproj" />
       <ProjectReference Include="..\..\IntegrationEvents\IntegrationEvents.csproj" />
     </ItemGroup>
