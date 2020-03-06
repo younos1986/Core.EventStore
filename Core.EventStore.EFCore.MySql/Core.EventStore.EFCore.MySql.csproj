@@ -3,12 +3,22 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>Core.EventStore.MySql</Title>
+        <Title>Core.EventStore.MySql.EFCore</Title>
         <Authors>eng.younos1986@gmail.com</Authors>
         <Description>A library to facilitate communication between CommandService and QueryService. The Idea is when any event occures in commandService, it should be persisted in QueryService in MongoDb</Description>
         <PackageProjectUrl>https://github.com/younos1986/Core.EventStore</PackageProjectUrl>
         <RepositoryUrl>https://github.com/younos1986/Core.EventStore</RepositoryUrl>
         <NeutralLanguage>en</NeutralLanguage>
+        <RootNamespace>Core.EventStore.MySql.EFCore</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="5.1.2" />
+      <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.19" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core.EventStore\Core.EventStore.csproj" />
+    </ItemGroup>
 
 </Project>

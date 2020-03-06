@@ -3,22 +3,26 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>Core.EventStore.EFCore</Title>
+        <Title>Core.EventStore.SqlServer.EFCore</Title>
         <Authors>eng.younos1986@gmail.com</Authors>
-        <Description>A library to facilitate communication between CommandService and QueryService. The Idea is when any event occures in commandService, it should be persisted in QueryService in MongoDb</Description>
+        <Description>It adds EF Core capability to Core.EventStore</Description>
         <PackageProjectUrl>https://github.com/younos1986/Core.EventStore</PackageProjectUrl>
         <RepositoryUrl>https://github.com/younos1986/Core.EventStore</RepositoryUrl>
         <NeutralLanguage>en</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>
+<!--        <PackageReference Include="Core.EventStore" Version="1.1.0" />-->
+        <PackageReference Include="Autofac" Version="5.1.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+        <PackageReference Include="MediatR" Version="7.0.0" />
+        <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
     </ItemGroup>
-    
+
     <ItemGroup>
       <ProjectReference Include="..\Core.EventStore\Core.EventStore.csproj" />
     </ItemGroup>
-
+    
 </Project>

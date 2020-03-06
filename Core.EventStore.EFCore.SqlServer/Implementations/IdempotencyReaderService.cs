@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
-using Core.EventStore.EFCore.Autofac;
-using Core.EventStore.EFCore.DbContexts;
+using Core.EventStore.EFCore.SqlServer.Autofac;
+using Core.EventStore.EFCore.SqlServer.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
-namespace Core.EventStore.EFCore.Implementations
+namespace Core.EventStore.EFCore.SqlServer.Implementations
 {
     public class IdempotenceReaderService: IIdempotenceReaderService
     {

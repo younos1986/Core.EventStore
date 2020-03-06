@@ -3,14 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
-using Core.EventStore.EFCore.Autofac;
-using Core.EventStore.EFCore.DbContexts;
 using Core.EventStore.IdGeneration;
+using Core.EventStore.MySql.EFCore.Autofac;
+using Core.EventStore.MySql.EFCore.DbContexts;
 using EventStore.ClientAPI;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 
-namespace Core.EventStore.EFCore.Implementations
+namespace Core.EventStore.MySql.EFCore.Implementations
 {
     public class PositionReaderService: IPositionReaderService
     {

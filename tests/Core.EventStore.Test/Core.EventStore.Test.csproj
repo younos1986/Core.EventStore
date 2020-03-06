@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Docker.DotNet" Version="3.125.2" />
 
 
 

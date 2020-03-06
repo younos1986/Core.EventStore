@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Core.EventStore.Autofac;
-using Core.EventStore.EFCore.Autofac;
+using Core.EventStore.EFCore.SqlServer.Autofac;
 using IntegrationEvents;
 using QueryService.InvokerPipelines;
 

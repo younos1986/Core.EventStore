@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/younos1986/Core.EventStore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/younos1986/Core.EventStore</RepositoryUrl>
     <NeutralLanguage>en</NeutralLanguage>
+    <PackageVersion>1.1.0</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

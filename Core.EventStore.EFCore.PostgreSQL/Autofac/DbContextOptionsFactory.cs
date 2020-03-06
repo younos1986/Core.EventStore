@@ -1,7 +1,7 @@
-﻿using Core.EventStore.EFCore.DbContexts;
+﻿using Core.EventStore.EFCore.PostgreSQL.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core.EventStore.EFCore.Autofac
+namespace Core.EventStore.EFCore.PostgreSQL.Autofac
 {
     public class DbContextOptionsFactory
     {
@@ -18,7 +18,7 @@ namespace Core.EventStore.EFCore.Autofac
     {
         public static void Configure(DbContextOptionsBuilder<EventStoreEfCoreDbContext> builder, string connectionString)
         {
-            builder.UseSqlServer(connectionString);
+            builder.UseNpgsql(connectionString);
         }
     }
 }

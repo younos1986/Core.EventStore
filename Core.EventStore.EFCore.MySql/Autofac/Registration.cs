@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Reflection;
 using Autofac;
 using Core.EventStore.Contracts;
-using Core.EventStore.EFCore.DbContexts;
-using Core.EventStore.EFCore.Implementations;
-using Microsoft.Extensions.DependencyInjection;
+using Core.EventStore.MySql.EFCore.DbContexts;
+using Core.EventStore.MySql.EFCore.Implementations;
 
-namespace Core.EventStore.EFCore.Autofac
+namespace Core.EventStore.MySql.EFCore.Autofac
 {
     public static class Registration
     {
-        public static ContainerBuilder KeepPositionInEfCore(this ContainerBuilder containerBuilder, Action<EfCoreConfiguration> mongoConfiguration = null)
+        public static ContainerBuilder KeepPositionInMySql(this ContainerBuilder containerBuilder, Action<EfCoreConfiguration> mongoConfiguration = null)
         {
             EfCoreConfiguration configuration = new EfCoreConfiguration();
             if (mongoConfiguration != null)

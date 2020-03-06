@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
-using Core.EventStore.EFCore.Autofac;
-using Core.EventStore.EFCore.DbContexts;
+using Core.EventStore.EFCore.SqlServer.Autofac;
+using Core.EventStore.EFCore.SqlServer.DbContexts;
 
-namespace Core.EventStore.EFCore.Implementations
+namespace Core.EventStore.EFCore.SqlServer.Implementations
 {
     public class IdempotenceWriterService: IIdempotenceWriterService
     {

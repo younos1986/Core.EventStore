@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Core.EventStore.Autofac;
-using Core.EventStore.EFCore.Autofac;
 using Core.EventStore.Mongo.Autofac;
 using IntegrationEvents;
 using QueryService.InvokerPipelines;

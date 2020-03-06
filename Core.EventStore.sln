@@ -27,15 +27,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryService", "samples\int
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.Mongo", "Core.EventStore.Mongo\Core.EventStore.Mongo.csproj", "{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore", "Core.EventStore.EFCore\Core.EventStore.EFCore.csproj", "{E1F75120-4C84-4772-B107-A0EAD460E2BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore.SqlServer", "Core.EventStore.EFCore.SqlServer\Core.EventStore.EFCore.SqlServer.csproj", "{E1F75120-4C84-4772-B107-A0EAD460E2BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.MySql", "Core.EventStore.MySql\Core.EventStore.MySql.csproj", "{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore.MySql", "Core.EventStore.EFCore.MySql\Core.EventStore.EFCore.MySql.csproj", "{6745B4C9-7B4C-4EC1-BED3-19608EFF690E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integrated_efcore", "integrated_efcore", "{456ACFC4-F6BF-4471-9890-B59F25A31155}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandService", "samples\integrated_efcore\CommandService\CommandService.csproj", "{E53F74FE-1C21-4255-AAE7-A845645C35D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryService", "samples\integrated_efcore\QueryService\QueryService.csproj", "{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore.PostgreSQL", "Core.EventStore.EFCore.PostgreSQL\Core.EventStore.EFCore.PostgreSQL.csproj", "{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

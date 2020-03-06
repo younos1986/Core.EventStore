@@ -1,9 +1,8 @@
-﻿using System;
-using Core.EventStore.Configurations;
-using Core.EventStore.EFCore.Autofac;
+﻿using Core.EventStore.Configurations;
+using Core.EventStore.EFCore.PostgreSQL.Autofac;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core.EventStore.EFCore.DbContexts
+namespace Core.EventStore.EFCore.PostgreSQL.DbContexts
 {
     public class EventStoreEfCoreDbContext: DbContext
     {
@@ -23,7 +22,8 @@ namespace Core.EventStore.EFCore.DbContexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_efCoreConfiguration.ConnectionString);
+                //Host=my_host;Database=my_db;Username=my_user;Password=my_pw
+                optionsBuilder.UseNpgsql(_efCoreConfiguration.ConnectionString);
             }
         }
 

@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Core.EventStore.EFCore\Core.EventStore.EFCore.csproj" />
+      <ProjectReference Include="..\..\..\Core.EventStore.EFCore.SqlServer\Core.EventStore.EFCore.SqlServer.csproj" />
       <ProjectReference Include="..\..\..\Core.EventStore\Core.EventStore.csproj" />
       <ProjectReference Include="..\..\IntegrationEvents\IntegrationEvents.csproj" />
     </ItemGroup>

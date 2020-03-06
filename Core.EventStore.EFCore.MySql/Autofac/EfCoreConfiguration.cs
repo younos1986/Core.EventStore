@@ -1,8 +1,4 @@
-﻿using System;
-using Core.EventStore.Configurations;
-using MongoDB.Driver;
-
-namespace Core.EventStore.EFCore.Autofac
+﻿namespace Core.EventStore.MySql.EFCore.Autofac
 {
     public interface IEfCoreConfiguration
     {
