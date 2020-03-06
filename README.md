@@ -15,11 +15,11 @@ A library to facilitate communication between CommandService and QueryService. T
 
 # Nuget
 
-<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore Nuget Package <a/>
+<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore <a/>
  
-<a href="https://www.nuget.org/packages/Core.EventStore.Mongo/"> Core.EventStore.Mongo Nuget Package <a/>
+<a href="https://www.nuget.org/packages/Core.EventStore.Mongo/"> Core.EventStore.Mongo <a/>
  
-<a href="https://www.nuget.org/packages/Core.EventStore.EFCore/"> Core.EventStore.EFCore Nuget Package <a/>
+<a href="https://www.nuget.org/packages/Core.EventStore.EFCore/"> Core.EventStore.EFCore <a/>
 
 
 
