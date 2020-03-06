@@ -33,10 +33,15 @@ A library to facilitate communication between CommandService and QueryService. T
 # Dependencies
 
 .NETStandard 2.1
+
 Autofac (>= 5.1.2)
+
 EventStore.Client (>= 5.0.6)
+
 MediatR (>= 7.0.0)
+
 Microsoft.Extensions.Configuration.Abstractions (>= 3.1.2)
+
 MongoDB.Driver (>= 2.10.0)
 
 
