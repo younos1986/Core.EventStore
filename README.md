@@ -18,6 +18,7 @@ A library to facilitate communication between CommandService and QueryService. T
 <a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore Nuget Package <a/>
 
 
+
 # Features
 
 * Keep track of last event position
