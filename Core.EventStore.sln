@@ -21,9 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationEvents", "sample
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integrated_mongo", "integrated_mongo", "{936B86FC-6869-445C-95A0-16AD0BB4BF35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandService", "samples\integrated_mongo\CommandService\CommandService.csproj", "{216525D4-00CE-4065-8A90-46A8828CBF3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoCommandService", "samples\integrated_mongo\MongoCommandService\MongoCommandService.csproj", "{216525D4-00CE-4065-8A90-46A8828CBF3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryService", "samples\integrated_mongo\QueryService\QueryService.csproj", "{CC07887E-86A7-46C8-BE33-ACA42756AD6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoQueryService", "samples\integrated_mongo\MongoQueryService\MongoQueryService.csproj", "{CC07887E-86A7-46C8-BE33-ACA42756AD6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.Mongo", "Core.EventStore.Mongo\Core.EventStore.Mongo.csproj", "{AC6832B2-C51F-4685-85CF-60AEA1EEA9E0}"
 EndProject
@@ -33,9 +33,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore.MySq
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integrated_efcore", "integrated_efcore", "{456ACFC4-F6BF-4471-9890-B59F25A31155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandService", "samples\integrated_efcore\CommandService\CommandService.csproj", "{E53F74FE-1C21-4255-AAE7-A845645C35D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreCommandService", "samples\integrated_efcore\EfCoreCommandService\EfCoreCommandService.csproj", "{E53F74FE-1C21-4255-AAE7-A845645C35D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryService", "samples\integrated_efcore\QueryService\QueryService.csproj", "{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreQueryService", "samples\integrated_efcore\EfCoreQueryService\EfCoreQueryService.csproj", "{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore.PostgreSQL", "Core.EventStore.EFCore.PostgreSQL\Core.EventStore.EFCore.PostgreSQL.csproj", "{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}"
 EndProject

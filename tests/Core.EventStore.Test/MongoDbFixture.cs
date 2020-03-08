@@ -26,13 +26,22 @@ namespace Core.EventStore.Test
             //DockerClient client = new DockerClientConfiguration(new Uri("http://localhost:2375")).CreateClient();
             
             Client = new DockerClientConfiguration(
-                    new Uri("npipe://./pipe/docker_engine"))
+                    new Uri("unix:///var/run/docker.sock"))
                 .CreateClient();
             
+            // I'm running docker on Ubuntu, you may have to connect to Docker Machine on Windows.
+            //var config = new DockerClientConfiguration(new Uri("npipe://./pipe/docker_engine"));
+            var config = new DockerClientConfiguration(new Uri("unix:///var/run/docker.sock"));
             
             
-             // I'm running docker on Ubuntu, you may have to connect to Docker Machine on Windows.
-            var config = new DockerClientConfiguration(new Uri("npipe://./pipe/docker_engine"));
+            // Client = new DockerClientConfiguration(
+            //         new Uri("npipe://./pipe/docker_engine"))
+            //     .CreateClient();
+            //
+            //
+            //
+            //  // I'm running docker on Ubuntu, you may have to connect to Docker Machine on Windows.
+            // var config = new DockerClientConfiguration(new Uri("npipe://./pipe/docker_engine"));
             this.Client = config.CreateClient();
             var images = await this.Client.Images.ListImagesAsync(new ImagesListParameters { MatchName = MongoImage });
             if (images.Count == 0)

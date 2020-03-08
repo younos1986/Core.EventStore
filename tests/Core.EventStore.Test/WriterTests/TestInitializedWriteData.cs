@@ -1,7 +1,6 @@
 using Autofac;
 using Core.EventStore.Autofac;
 using Core.EventStore.Configurations;
-using Core.EventStore.Test.Events;
 using Core.EventStore.Test.Infrastructures;
 using FluentAssertions;
 using Xunit;
