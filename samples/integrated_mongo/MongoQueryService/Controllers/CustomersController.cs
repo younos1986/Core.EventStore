@@ -19,9 +19,9 @@ namespace MongoQueryService.Controllers
         }
 
         [HttpGet, Route("[action]")]
-        public async Task<IActionResult> GetCustomer()
+        public async Task<IActionResult> GetCustomer([FromQuery]Guid id)
         {
-            var customer = await _mongoDb.GetOneAsync<CustomerCreated>(Guid.NewGuid());
+            var customer = await _mongoDb.GetOneAsync(id);
             return Ok(customer);
         }
     }

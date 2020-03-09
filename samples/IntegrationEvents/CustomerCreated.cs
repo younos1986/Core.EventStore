@@ -7,12 +7,14 @@ namespace IntegrationEvents
 {
     public class CustomerCreated : INotification
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        public CustomerCreated(string firstName, string lastName, DateTime createdOn)
+        public CustomerCreated(Guid id,string firstName, string lastName, DateTime createdOn)
         {
+            this.Id = id; 
             this.FirstName = firstName;
             this.LastName = lastName;
             this.CreatedOn = createdOn;

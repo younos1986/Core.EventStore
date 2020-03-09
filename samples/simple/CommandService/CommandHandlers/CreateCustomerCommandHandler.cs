@@ -23,7 +23,7 @@ namespace CommandService.CommandHandlers
         public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken cancellationToken)
         {
             // Raising Event ...
-            var @event = new CustomerCreated(cmd.FirstName, cmd.LastName, DateTime.UtcNow);
+            var @event = new CustomerCreated(Guid.NewGuid(), cmd.FirstName, cmd.LastName, DateTime.UtcNow);
             //await _mediator.Publish(@event, cancellationToken);
 
             var res = new CustomerDto()

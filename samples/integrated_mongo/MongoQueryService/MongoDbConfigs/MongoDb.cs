@@ -23,13 +23,10 @@ namespace MongoQueryService.MongoDbConfigs
                 await GetCollection<T>().InsertOneAsync(entity);
             }
             
-            public async Task<T> GetOneAsync<T>(Guid id)
+            public async Task<CustomerCreated> GetOneAsync(Guid id)
             {
-                //var nameFilter = MongoDB.Driver.Builders<CustomerCreated>.Filter.Eq(x => x., id);
-            
-                var doc = await  GetCollection<T>()
-                    .Find(x => true)
-                    .FirstOrDefaultAsync();
+                var queryResult = await GetCollection<CustomerCreated>().FindAsync(x => x.Id == id);
+                var doc = await queryResult.SingleOrDefaultAsync();
 
                 return doc;
             }
@@ -40,6 +37,6 @@ namespace MongoQueryService.MongoDbConfigs
         {
             Task InsertOneAsync<T>(T entity);
 
-            Task<T> GetOneAsync<T>(Guid id);
+            Task<CustomerCreated> GetOneAsync(Guid id);
         }
 }

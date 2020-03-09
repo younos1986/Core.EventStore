@@ -7,6 +7,10 @@ namespace EfCoreQueryService.Projectors
 {
     public class CustomerCreatedEventProjector : IProjector<CustomerCreated>
     {
+
+        public static CustomerCreated _CustomerCreated;
+        
+        
         public CustomerCreatedEventProjector()
         {
         }
@@ -14,6 +18,7 @@ namespace EfCoreQueryService.Projectors
         public async Task HandleAsync(CustomerCreated integrationEvent)
         {
             Console.WriteLine(integrationEvent);
+            _CustomerCreated = integrationEvent;
             await Task.CompletedTask;
         }
     }

@@ -70,7 +70,7 @@ namespace MongoQueryService
 
             //eventStoreReader.PerformReadStreamEventsForwardAsync("CustomerCreated", 0, 10, false, null);
             
-            eventStoreReader.PerformAll( null);
+            // eventStoreReader.PerformAll( null);
 
 
         }

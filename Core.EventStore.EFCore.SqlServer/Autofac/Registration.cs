@@ -10,43 +10,45 @@ namespace Core.EventStore.EFCore.SqlServer.Autofac
 {
     public static class Registration
     {
-        public static ContainerBuilder KeepPositionInEfCore(this ContainerBuilder containerBuilder, Action<EfCoreConfiguration> mongoConfiguration = null)
+
+        public static ContainerBuilder UseeEfCore(this ContainerBuilder containerBuilder, Action<EfCoreConfiguration> efCoreConfiguration)
         {
             EfCoreConfiguration configuration = new EfCoreConfiguration();
-            if (mongoConfiguration != null)
-            {
-                
-                mongoConfiguration.Invoke(configuration);
+
+                efCoreConfiguration.Invoke(configuration);
                 containerBuilder.RegisterInstance(configuration).As<IEfCoreConfiguration>()
                     .IfNotRegistered(typeof(IEfCoreConfiguration)).SingleInstance();
-            }
-            
-            containerBuilder.RegisterType<PositionReaderService>().As<IPositionReaderService>().SingleInstance();
-            containerBuilder.RegisterType<PositionWriteService>().As<IPositionWriteService>().SingleInstance();
-            
-            
             
             // containerBuilder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
+            if (configuration.DbContext == null)
+            {
+                containerBuilder
+                    .RegisterType<EventStoreEfCoreDbContext>()
+                    .WithParameter("options", parameterValue: DbContextOptionsFactory.Get(configuration .ConnectionString))
+                    .InstancePerLifetimeScope();    
+            }
+            else
+            {
+                containerBuilder
+                    .RegisterInstance(configuration.DbContext)
+                    .As<EventStoreEfCoreDbContext>()
+                    .InstancePerLifetimeScope();    
+            }
 
-            containerBuilder
-                .RegisterType<EventStoreEfCoreDbContext>()
-                .WithParameter("options", parameterValue: DbContextOptionsFactory.Get(configuration .ConnectionString))
-                .InstancePerLifetimeScope();
-            
 
             return containerBuilder;
         }
-        
-        public static ContainerBuilder KeepIdempotenceInEfCore(this ContainerBuilder containerBuilder, Action<EfCoreConfiguration> mongoConfiguration = null)
-        {
-            if (mongoConfiguration != null)
-            {
-                EfCoreConfiguration configuration = new EfCoreConfiguration();
-                mongoConfiguration.Invoke(configuration);
-                containerBuilder.RegisterInstance(configuration).As<IEfCoreConfiguration>()
-                    .IfNotRegistered(typeof(IEfCoreConfiguration)).SingleInstance();
-            }
 
+        public static ContainerBuilder KeepPositionInEfCore(this ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<PositionReaderService>().As<IPositionReaderService>().SingleInstance();
+            containerBuilder.RegisterType<PositionWriteService>().As<IPositionWriteService>().SingleInstance();
+            
+            return containerBuilder;
+        }
+        
+        public static ContainerBuilder KeepIdempotenceInEfCore(this ContainerBuilder containerBuilder)
+        {
             containerBuilder.RegisterType<IdempotenceWriterService>().As<IIdempotenceWriterService>().SingleInstance();
             containerBuilder.RegisterType<IdempotenceReaderService>().As<IIdempotenceReaderService>().SingleInstance();
             

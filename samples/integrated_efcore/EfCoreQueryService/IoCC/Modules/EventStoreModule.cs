@@ -3,6 +3,7 @@ using Core.EventStore.Autofac;
 using Core.EventStore.EFCore.SqlServer.Autofac;
 using EfCoreQueryService.InvokerPipelines;
 using IntegrationEvents;
+using Microsoft.EntityFrameworkCore;
 
 namespace EfCoreQueryService.IoCC.Modules
 {
@@ -27,11 +28,15 @@ namespace EfCoreQueryService.IoCC.Modules
                         subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
                         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
                     }, new CustomProjectorInvoker())
-                    .KeepPositionInEfCore(configuration =>
+                    .UseeEfCore(configuration =>
                     {
                         configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;";
                         configuration.DefaultSchema = "dbo";
+                        
+                        //configuration.DbContext = new DbContext();   //implement
+                        
                     })
+                    .KeepPositionInEfCore()
                     .KeepIdempotenceInEfCore();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
 namespace Core.EventStore.EFCore.SqlServer.Autofac
@@ -21,6 +22,8 @@ namespace Core.EventStore.EFCore.SqlServer.Autofac
 
         public string DefaultSchema { get; set; } = "dbo";
 
+        public DbContext DbContext { get; set; } 
+        
         
     }
 }

@@ -36,12 +36,14 @@ namespace Core.EventStore.Registration
             _container = container;
         }
 
-        private static readonly UserCredentials User = new UserCredentials("admin", "changeit");
+        private UserCredentials User;
         private EventStoreSubscription _subscription;
 
         public bool Start()
         {
+            User = new UserCredentials("admin", "changeit");
             _eventStoreConnectionManager.Start();
+            
             CreateSubscription();
             Console.WriteLine("waiting for events. press enter to exit");
             return true;
@@ -64,6 +66,10 @@ namespace Core.EventStore.Registration
             try
             {
                 _eventStoreConnection.SubscribeToAllAsync(false, EventAppeared, SubscriptionDropped, User).Wait();
+                // foreach (var ev in _subscriptionConfiguration.SubscribedEvents)
+                // {
+                //     _eventStoreConnection.SubscribeToStreamAsync(ev.Key ,false  , EventAppeared , SubscriptionDropped , User ).Wait();    
+                // }
             }
             catch (AggregateException ex)
             {
@@ -71,7 +77,7 @@ namespace Core.EventStore.Registration
                                                   && ex.InnerException?.Message !=
                                                   $"Subscription group on stream already exists"))
                 {
-                    throw;
+                    //throw;
                 }
             }
         }

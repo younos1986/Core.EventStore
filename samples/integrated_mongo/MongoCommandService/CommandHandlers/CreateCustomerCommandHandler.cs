@@ -20,14 +20,16 @@ namespace MongoCommandService.CommandHandlers
 
         public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken cancellationToken)
         {
-            var @event = new CustomerCreated(cmd.FirstName, cmd.LastName, DateTime.UtcNow);
+            var @event = new CustomerCreated(Guid.NewGuid(), cmd.FirstName, cmd.LastName, DateTime.UtcNow);
 
             //do sth
             
             var res = new CustomerDto()
             {
+                Id = @event.Id,
                 FirstName = cmd.FirstName,
                 LastName = cmd.LastName,
+                CreatedOn =  @event.CreatedOn
             };
 
             await _eventStoreDbContext.AppendToStreamAsync(@event);

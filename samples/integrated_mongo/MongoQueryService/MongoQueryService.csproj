@@ -7,13 +7,11 @@
     <ItemGroup>
         <PackageReference Include="Autofac" Version="5.1.2" />
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-        <PackageReference Include="Core.EventStore.Mongo" Version="1.0.0" />
-        <PackageReference Include="Core.EventStore" Version="1.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-<!--        <ProjectReference Include="..\..\..\Core.EventStore.Mongo\Core.EventStore.Mongo.csproj"/>-->
-<!--        <ProjectReference Include="..\..\..\Core.EventStore\Core.EventStore.csproj"/>-->
+        <ProjectReference Include="..\..\..\Core.EventStore.Mongo\Core.EventStore.Mongo.csproj"/>
+        <ProjectReference Include="..\..\..\Core.EventStore\Core.EventStore.csproj"/>
         <ProjectReference Include="..\..\IntegrationEvents\IntegrationEvents.csproj" />
     </ItemGroup>
 

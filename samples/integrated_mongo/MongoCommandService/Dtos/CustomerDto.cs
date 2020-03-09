@@ -11,6 +11,6 @@ namespace MongoCommandService.Dtos
 
         public string LastName { get; set; }
 
-        public string CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
