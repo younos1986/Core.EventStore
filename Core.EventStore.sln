@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{0E0B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C10F2E43-3E4B-43B5-B5CF-F7FC61867CA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.Test", "tests\Core.EventStore.Test\Core.EventStore.Test.csproj", "{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.IntegrationTest", "tests\Core.EventStore.IntegrationTest\Core.EventStore.IntegrationTest.csproj", "{33EAC47A-2BBF-4CEC-B0C5-EE060EFE6D6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{F450AA6E-AC14-4AC4-A625-BE7B20C82A98}"
 EndProject
@@ -38,6 +38,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreQueryService", "samples\integrated_efcore\EfCoreQueryService\EfCoreQueryService.csproj", "{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.EFCore.PostgreSQL", "Core.EventStore.EFCore.PostgreSQL\Core.EventStore.EFCore.PostgreSQL.csproj", "{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EventStore.UnitTest", "tests\Core.EventStore.UnitTest\Core.EventStore.UnitTest.csproj", "{E33F1B55-836F-4A07-B808-9909B0F8C178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlCommandService", "samples\integrated_mysql\MySqlCommandService\MySqlCommandService.csproj", "{D2473EE1-FA40-4D2F-8389-E97AB183568B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integrated_mysql", "integrated_mysql", "{8FB2793D-0A67-418B-B267-060E4D2BAE27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlQueryService", "samples\integrated_mysql\MySqlQueryService\MySqlQueryService.csproj", "{05761FA4-0818-41F0-B5F5-930D4748F9E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +105,18 @@ Global
 		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2936C29-9F20-4D14-870B-5D9EDFD34A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E33F1B55-836F-4A07-B808-9909B0F8C178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33F1B55-836F-4A07-B808-9909B0F8C178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33F1B55-836F-4A07-B808-9909B0F8C178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33F1B55-836F-4A07-B808-9909B0F8C178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2473EE1-FA40-4D2F-8389-E97AB183568B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2473EE1-FA40-4D2F-8389-E97AB183568B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2473EE1-FA40-4D2F-8389-E97AB183568B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2473EE1-FA40-4D2F-8389-E97AB183568B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05761FA4-0818-41F0-B5F5-930D4748F9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05761FA4-0818-41F0-B5F5-930D4748F9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05761FA4-0818-41F0-B5F5-930D4748F9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05761FA4-0818-41F0-B5F5-930D4748F9E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +133,10 @@ Global
 		{456ACFC4-F6BF-4471-9890-B59F25A31155} = {0E0BCA44-E371-4FAE-882A-519BAC7AAB47}
 		{E53F74FE-1C21-4255-AAE7-A845645C35D4} = {456ACFC4-F6BF-4471-9890-B59F25A31155}
 		{C6C35F1B-F227-4CDF-BCB7-A364CA8DD419} = {456ACFC4-F6BF-4471-9890-B59F25A31155}
+		{E33F1B55-836F-4A07-B808-9909B0F8C178} = {C10F2E43-3E4B-43B5-B5CF-F7FC61867CA9}
+		{8FB2793D-0A67-418B-B267-060E4D2BAE27} = {0E0BCA44-E371-4FAE-882A-519BAC7AAB47}
+		{D2473EE1-FA40-4D2F-8389-E97AB183568B} = {8FB2793D-0A67-418B-B267-060E4D2BAE27}
+		{05761FA4-0818-41F0-B5F5-930D4748F9E4} = {8FB2793D-0A67-418B-B267-060E4D2BAE27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4111EE0-9B47-40FA-998C-D3A0F0CE07B1}

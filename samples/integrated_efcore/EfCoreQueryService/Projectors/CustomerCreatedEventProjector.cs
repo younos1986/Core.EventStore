@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 
 namespace EfCoreQueryService.Projectors
 {
-    public class CustomerCreatedEventProjector : IProjector<CustomerCreated>
+    public class CustomerCreatedEventProjector : IProjector<CustomerCreatedForEfCore>
     {
 
-        public static CustomerCreated _CustomerCreated;
+        public static CustomerCreatedForEfCore _CustomerCreated;
         
         
         public CustomerCreatedEventProjector()
         {
         }
         
-        public async Task HandleAsync(CustomerCreated integrationEvent)
+        public async Task HandleAsync(CustomerCreatedForEfCore integrationEvent)
         {
             Console.WriteLine(integrationEvent);
             _CustomerCreated = integrationEvent;

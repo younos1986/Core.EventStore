@@ -25,8 +25,7 @@ namespace EfCoreQueryService.IoCC.Modules
                     })
                     .SubscribeRead(subscriptionConfiguration =>
                     {
-                        subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
-                        subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
+                        subscriptionConfiguration.AddEvent<CustomerCreatedForEfCore>(nameof(CustomerCreatedForEfCore));
                     }, new CustomProjectorInvoker())
                     .UseeEfCore(configuration =>
                     {

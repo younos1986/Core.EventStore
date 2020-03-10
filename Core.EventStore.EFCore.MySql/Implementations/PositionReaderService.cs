@@ -13,9 +13,9 @@ namespace Core.EventStore.MySql.EFCore.Implementations
 {
     public class PositionReaderService: IPositionReaderService
     {
-        private readonly IEfCoreConfiguration _mongoConfiguration; 
-        private readonly EventStoreEfCoreDbContext _dbContext;
-        public PositionReaderService(IEfCoreConfiguration mongoConfiguration, EventStoreEfCoreDbContext  dbContext)
+        private readonly IMySqlConfiguration _mongoConfiguration; 
+        private readonly EventStoreMySqlDbContext _dbContext;
+        public PositionReaderService(IMySqlConfiguration mongoConfiguration, EventStoreMySqlDbContext  dbContext)
         {
             _mongoConfiguration = mongoConfiguration;
             _dbContext = dbContext;

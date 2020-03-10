@@ -9,9 +9,9 @@ namespace Core.EventStore.MySql.EFCore.Implementations
 {
     public class IdempotenceReaderService: IIdempotenceReaderService
     {
-        private readonly IEfCoreConfiguration _mongoConfiguration;
-        private readonly EventStoreEfCoreDbContext _dbContext;
-        public IdempotenceReaderService(IEfCoreConfiguration mongoConfiguration , EventStoreEfCoreDbContext  dbContext)
+        private readonly IMySqlConfiguration _mongoConfiguration;
+        private readonly EventStoreMySqlDbContext _dbContext;
+        public IdempotenceReaderService(IMySqlConfiguration mongoConfiguration , EventStoreMySqlDbContext  dbContext)
         {
             _mongoConfiguration = mongoConfiguration;
             _dbContext = dbContext;

@@ -1,4 +1,5 @@
-﻿using EfCoreCommandService.Dtos;
+﻿using System;
+using EfCoreCommandService.Dtos;
 using MediatR;
 
 namespace EfCoreCommandService.Commands
@@ -11,6 +12,8 @@ namespace EfCoreCommandService.Commands
         //    LastName = lastName;
         //}
 
+        public Guid Id { get; set; }
+        
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

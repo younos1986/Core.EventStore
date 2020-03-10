@@ -9,7 +9,7 @@ namespace EfCoreQueryService.IoCC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CustomerCreatedEventProjector>().As<IProjector<CustomerCreated>>();
+            builder.RegisterType<CustomerCreatedEventProjector>().As<IProjector<CustomerCreatedForEfCore>>();
             //builder.RegisterType<CustomerInsertedEventProjector>().As<IProjector<CustomerCreated>>();
         }
     }

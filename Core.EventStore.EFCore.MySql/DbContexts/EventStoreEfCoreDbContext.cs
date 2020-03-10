@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.EventStore.MySql.EFCore.DbContexts
 {
-    public class EventStoreEfCoreDbContext: DbContext
+    public class EventStoreMySqlDbContext: DbContext
     {
         public virtual DbSet<EventStoreIdempotence> EventStoreIdempotences { get; set; }
         
         public virtual DbSet<EventStorePosition> EventStorePositions { get; set; }
         
         
-        private readonly IEfCoreConfiguration _efCoreConfiguration;
-        public EventStoreEfCoreDbContext(DbContextOptions<EventStoreEfCoreDbContext> options, IEfCoreConfiguration efCoreConfiguration) : base(options)
+        private readonly IMySqlConfiguration _efCoreConfiguration;
+        public EventStoreMySqlDbContext(DbContextOptions<EventStoreMySqlDbContext> options, IMySqlConfiguration efCoreConfiguration) : base(options)
         {
             _efCoreConfiguration = efCoreConfiguration;
         }

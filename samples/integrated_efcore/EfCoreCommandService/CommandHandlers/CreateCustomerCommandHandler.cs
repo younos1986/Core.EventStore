@@ -20,7 +20,7 @@ namespace EfCoreCommandService.CommandHandlers
 
         public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken cancellationToken)
         {
-            var @event = new CustomerCreated(Guid.NewGuid(), cmd.FirstName, cmd.LastName, DateTime.UtcNow);
+            var @event = new CustomerCreatedForEfCore(cmd.Id, cmd.FirstName, cmd.LastName, DateTime.UtcNow);
 
             //do sth
             

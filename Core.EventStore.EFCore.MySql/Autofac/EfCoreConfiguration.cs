@@ -1,6 +1,6 @@
 ﻿namespace Core.EventStore.MySql.EFCore.Autofac
 {
-    public interface IEfCoreConfiguration
+    public interface IMySqlConfiguration
     {
         string ConnectionString { get; set; }
         string PositionTableName { get; set; }
@@ -8,7 +8,7 @@
         string DefaultSchema { get; set; }
     }
 
-    public class EfCoreConfiguration : IEfCoreConfiguration
+    public class MySqlConfiguration : IMySqlConfiguration
     {
         public string ConnectionString { get; set; }
         

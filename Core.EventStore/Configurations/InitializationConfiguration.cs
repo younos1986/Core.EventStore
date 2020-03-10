@@ -1,6 +1,6 @@
 ﻿
 
-// [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Core.EventStore.Test")]
+// [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Core.EventStore.IntegrationTest")]
 
 namespace Core.EventStore.Configurations
 {
