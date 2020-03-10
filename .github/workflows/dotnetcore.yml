@@ -16,4 +16,4 @@ jobs:
     - name: Build with dotnet
       run: dotnet build ./Core.EventStore.sln --configuration Release
     - name: Test with dotnet
-      run: dotnet test ./Core.EventStore.sln --configuration Release
+      run: dotnet test ./tests/Core.EventStore.UnitTest/Core.EventStore.UnitTest.csproj --configuration Release
