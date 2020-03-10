@@ -3,7 +3,7 @@
 ![.NET Core](https://github.com/younos1986/Core.EventStore/workflows/.NET%20Core/badge.svg)
  
 
-A library to facilitate communication between CommandService and QueryService. The Idea is when any event occures in commandService, it should be persisted in QueryService in MongoDb
+A library to facilitate communication between CommandService and QueryService. The Idea is when any event occures in commandService, it should be persisted in QueryService in MongoDb, SqlServer, MySql and PostgreSQL
 
 
 <img src="https://raw.githubusercontent.com/younos1986/Core.EventStore/master/images/what_it_does.png" />
