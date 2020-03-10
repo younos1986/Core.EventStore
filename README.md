@@ -19,7 +19,9 @@ A library to facilitate communication between CommandService and QueryService. T
  
 <a href="https://www.nuget.org/packages/Core.EventStore.Mongo/"> Core.EventStore.Mongo <a/>
  
-<a href="https://www.nuget.org/packages/Core.EventStore.EFCore/"> Core.EventStore.EFCore <a/>
+<a href="https://www.nuget.org/packages/Core.EventStore.EFCore.SqlServer/"> Core.EventStore.EFCore.SqlServer <a/>
+
+<a href="https://www.nuget.org/packages/Core.EventStore.EFCore.MySql"> Core.EventStore.EFCore.MySql <a/>
 
 
 
