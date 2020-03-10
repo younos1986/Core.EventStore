@@ -1,4 +1,6 @@
-﻿using Core.EventStore.MySql.EFCore.DbContexts;
+﻿using Core.EventStore.Configurations;
+using Core.EventStore.MySql.EFCore.Autofac;
+using Core.EventStore.MySql.EFCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.EventStore.MySql.EFCore.Autofac
@@ -9,7 +11,7 @@ namespace Core.EventStore.MySql.EFCore.Autofac
         {
             var builder = new DbContextOptionsBuilder<EventStoreMySqlDbContext>();
             DbContextConfigurer.Configure(builder, stringConnection);
-
+    
             return builder.Options;
         }
     }
@@ -18,7 +20,7 @@ namespace Core.EventStore.MySql.EFCore.Autofac
     {
         public static void Configure(DbContextOptionsBuilder<EventStoreMySqlDbContext> builder, string connectionString)
         {
-            builder.UseMySQL(connectionString);
+            builder.UseMySql(connectionString);
         }
     }
 }

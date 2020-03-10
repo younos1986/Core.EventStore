@@ -24,16 +24,12 @@ namespace MySqlQueryService.IoCC.Modules
                     })
                     .SubscribeRead(subscriptionConfiguration =>
                     {
-                        subscriptionConfiguration.AddEvent<CustomerCreated>(nameof(CustomerCreated));
+                        subscriptionConfiguration.AddEvent<CustomerCreatedForMySql>(nameof(CustomerCreatedForMySql));
                         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
                     }, new CustomProjectorInvoker())
                     .UseeMySql(configuration =>
                     {
-                        configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;";
-                        configuration.DefaultSchema = "dbo";
-                        
-                        //configuration.DbContext = new DbContext();   //implement
-                        
+                        configuration.ConnectionString = "server=localhost;Database=EventStoreDb;uid=root;pwd=TTTttt456;sslmode=none;";
                     })
                     .KeepPositionInMySql()
                     .KeepIdempotenceInMySql();

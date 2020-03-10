@@ -24,38 +24,38 @@ namespace Core.EventStore.IntegrationTest
    
     public class EventStoreMySqlTest :IClassFixture<ModuleFixture>
     {
-        //private readonly HttpClient _queryApi;
-        //private readonly HttpClient _commandApi;
+        private readonly HttpClient _queryApi;
+        private readonly HttpClient _commandApi;
         public EventStoreMySqlTest(ModuleFixture fixture)
         {
             // var eventStoreContainer =  fixture.Container.Resolve<EventStoreContainer>();
             // var sqlContainer =  fixture.Container.Resolve<SqlServerContainer>();
 
-            //_commandApi = new MySqlCommandServiceApi().GetClient().GetAwaiter().GetResult();
-            //_queryApi =  new MySqlQueryServiceApi().GetClient().GetAwaiter().GetResult();
+            _commandApi = new MySqlCommandServiceApi().GetClient().GetAwaiter().GetResult();
+            _queryApi =  new MySqlQueryServiceApi().GetClient().GetAwaiter().GetResult();
         }
 
-        //[Fact]
+        [Fact]
         public async Task Raised_Event_Should_Be_In_MySql()
         {
-            // var command = new CustomerCreated(Guid.NewGuid(),"Younes" , "Baghaie Moghaddam", DateTime.Now);
-            // var jsonCustomer = JsonConvert.SerializeObject(command);
-            //
-            // // create a customer
-            // var customerData = new StringContent(jsonCustomer, UTF8Encoding.UTF8, "application/json");
-            // var createCustomerResponse = await _commandApi.PostAsync("api/Customers/CreateCustomer", customerData);
-            // createCustomerResponse.EnsureSuccessStatusCode();
-            //
-            // var createCustomerString = await createCustomerResponse.Content.ReadAsStringAsync();
-            // var createdCustomer = JsonConvert.DeserializeObject<CustomerCreated>(createCustomerString);
-            //
-            // await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-            //
-            // var getCustomerResponse = await _queryApi.GetAsync($@"api/Customers/GetCustomer?id={ createdCustomer.Id }");
-            // var getCustomerString = await getCustomerResponse.Content.ReadAsStringAsync();
-            // var retrievedCustomer = JsonConvert.DeserializeObject<CustomerCreated>(getCustomerString);
-            //
-            // createdCustomer.Id.Should().Be(retrievedCustomer.Id);
+            var command = new CustomerCreatedForMySql(Guid.NewGuid(),"Younes" , "Baghaie Moghaddam", DateTime.Now);
+            var jsonCustomer = JsonConvert.SerializeObject(command);
+            
+            // create a customer
+            var customerData = new StringContent(jsonCustomer, UTF8Encoding.UTF8, "application/json");
+            var createCustomerResponse = await _commandApi.PostAsync("api/Customers/CreateCustomer", customerData);
+            createCustomerResponse.EnsureSuccessStatusCode();
+
+            var createCustomerString = await createCustomerResponse.Content.ReadAsStringAsync();
+            var createdCustomer = JsonConvert.DeserializeObject<CustomerCreatedForMySql>(createCustomerString);
+
+            await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+            
+            var getCustomerResponse = await _queryApi.GetAsync($@"api/Customers/GetCustomer?id={ createdCustomer.Id }");
+            var getCustomerString = await getCustomerResponse.Content.ReadAsStringAsync();
+            var retrievedCustomer = JsonConvert.DeserializeObject<CustomerCreatedForMySql>(getCustomerString);
+
+            createdCustomer.Id.Should().Be(retrievedCustomer.Id);
         }
     }
 }

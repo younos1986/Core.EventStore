@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
 namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
@@ -125,6 +124,7 @@ create table if not exists Positions
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine(ex.Message);
                         }
 
                         return TimeSpan.FromSeconds(1);

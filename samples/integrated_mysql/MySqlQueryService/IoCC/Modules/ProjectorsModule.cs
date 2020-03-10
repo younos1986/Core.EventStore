@@ -9,7 +9,7 @@ namespace MySqlQueryService.IoCC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CustomerCreatedEventProjector>().As<IProjector<CustomerCreated>>();
+            builder.RegisterType<CustomerCreatedEventProjector>().As<IProjector<CustomerCreatedForMySql>>();
             //builder.RegisterType<CustomerInsertedEventProjector>().As<IProjector<CustomerCreated>>();
         }
     }

@@ -20,7 +20,7 @@ namespace MySqlCommandService.CommandHandlers
 
         public async Task<CustomerDto> Handle(CreateCustomerCommand cmd, CancellationToken cancellationToken)
         {
-            var @event = new CustomerCreated(cmd.Id, cmd.FirstName, cmd.LastName, DateTime.UtcNow);
+            var @event = new CustomerCreatedForMySql(cmd.Id, cmd.FirstName, cmd.LastName, DateTime.UtcNow);
 
             //do sth
             

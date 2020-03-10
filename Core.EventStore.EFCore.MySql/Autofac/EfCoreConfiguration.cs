@@ -16,8 +16,8 @@
         
         public string IdempotenceTableName { get; set; } = "Idempotences";
 
-        public string DefaultSchema { get; set; } = "dbo";
+        public string DefaultSchema { get; set; } = null;
 
-        
+
     }
 }

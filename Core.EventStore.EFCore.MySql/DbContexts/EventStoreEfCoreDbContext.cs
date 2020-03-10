@@ -22,7 +22,7 @@ namespace Core.EventStore.MySql.EFCore.DbContexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL(_efCoreConfiguration.ConnectionString);
+                optionsBuilder.UseMySql(_efCoreConfiguration.ConnectionString);
             }
         }
 
@@ -31,10 +31,10 @@ namespace Core.EventStore.MySql.EFCore.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<EventStoreIdempotence>().ToTable(_efCoreConfiguration.IdempotenceTableName , _efCoreConfiguration.DefaultSchema);
+            modelBuilder.Entity<EventStoreIdempotence>().ToTable(_efCoreConfiguration.IdempotenceTableName);
             modelBuilder.Entity<EventStoreIdempotence>().HasKey(q => q.Id);
             
-            modelBuilder.Entity<EventStorePosition>().ToTable(_efCoreConfiguration.PositionTableName,_efCoreConfiguration.DefaultSchema);
+            modelBuilder.Entity<EventStorePosition>().ToTable(_efCoreConfiguration.PositionTableName);
             modelBuilder.Entity<EventStorePosition>().HasKey(q => q.Id);
 
         }

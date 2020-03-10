@@ -5,17 +5,17 @@ using IntegrationEvents;
 
 namespace MySqlQueryService.Projectors
 {
-    public class CustomerCreatedEventProjector : IProjector<CustomerCreated>
+    public class CustomerCreatedEventProjector : IProjector<CustomerCreatedForMySql>
     {
 
-        public static CustomerCreated _CustomerCreated;
+        public static CustomerCreatedForMySql _CustomerCreated;
         
         
         public CustomerCreatedEventProjector()
         {
         }
         
-        public async Task HandleAsync(CustomerCreated integrationEvent)
+        public async Task HandleAsync(CustomerCreatedForMySql integrationEvent)
         {
             Console.WriteLine(integrationEvent);
             _CustomerCreated = integrationEvent;
