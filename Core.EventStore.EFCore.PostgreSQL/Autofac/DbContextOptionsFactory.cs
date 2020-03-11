@@ -5,9 +5,9 @@ namespace Core.EventStore.EFCore.PostgreSQL.Autofac
 {
     public class DbContextOptionsFactory
     {
-        public static DbContextOptions<EventStoreEfCoreDbContext> Get(string stringConnection)
+        public static DbContextOptions<EventStorePostgresDbContext> Get(string stringConnection)
         {
-            var builder = new DbContextOptionsBuilder<EventStoreEfCoreDbContext>();
+            var builder = new DbContextOptionsBuilder<EventStorePostgresDbContext>();
             DbContextConfigurer.Configure(builder, stringConnection);
 
             return builder.Options;
@@ -16,7 +16,7 @@ namespace Core.EventStore.EFCore.PostgreSQL.Autofac
     
     public class DbContextConfigurer
     {
-        public static void Configure(DbContextOptionsBuilder<EventStoreEfCoreDbContext> builder, string connectionString)
+        public static void Configure(DbContextOptionsBuilder<EventStorePostgresDbContext> builder, string connectionString)
         {
             builder.UseNpgsql(connectionString);
         }

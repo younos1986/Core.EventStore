@@ -92,7 +92,6 @@ END
                 }
                 connection.Close();
             }
-            await Task.Delay(5000).ConfigureAwait(false);
             await using (var connection = new SqlConnection(CreateMasterConnectionStringBuilder().ConnectionString))
             {
                 await connection.OpenAsync();

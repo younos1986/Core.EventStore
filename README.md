@@ -15,15 +15,15 @@ A library to facilitate communication between CommandService and QueryService. T
 
 # Nuget
 
-<a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore <a/>
+* <a href="https://www.nuget.org/packages/Core.EventStore/"> Core.EventStore <a/>
  
-<a href="https://www.nuget.org/packages/Core.EventStore.Mongo/"> Core.EventStore.Mongo <a/>
+* <a href="https://www.nuget.org/packages/Core.EventStore.Mongo/"> Core.EventStore.Mongo <a/>
  
-<a href="https://www.nuget.org/packages/Core.EventStore.EFCore.SqlServer/"> Core.EventStore.EFCore.SqlServer <a/>
+* <a href="https://www.nuget.org/packages/Core.EventStore.EFCore.SqlServer/"> Core.EventStore.EFCore.SqlServer <a/>
 
-<a href="https://www.nuget.org/packages/Core.EventStore.EFCore.MySql"> Core.EventStore.EFCore.MySql <a/>
+* <a href="https://www.nuget.org/packages/Core.EventStore.EFCore.MySql"> Core.EventStore.EFCore.MySql <a/>
 
-
+* PostgreSQL is still in progress
 
 # Features
 

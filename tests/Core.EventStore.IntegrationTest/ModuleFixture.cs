@@ -35,6 +35,15 @@ namespace Core.EventStore.IntegrationTest
                 var builder = new ContainerBuilder();
 
                 //configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;";
+                var postgreSqlContainer = new PostgreSqlContainer("localhost", "EventStoreDb", "postgres", "TTTttt456", 5432);
+                postgreSqlContainer.InitializeAsync().GetAwaiter().GetResult();
+                postgreSqlContainer.CreateDatabaseAsync().GetAwaiter().GetResult();
+                builder.RegisterInstance(postgreSqlContainer).As<PostgreSqlContainer>().IfNotRegistered(typeof(PostgreSqlContainer))
+                    .SingleInstance();
+                
+                
+                
+                //configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;";
                 var mySqlContainer = new MySqlContainer("localhost", "EventStoreDb", "TTTttt456", 3306);
                 mySqlContainer.InitializeAsync().GetAwaiter().GetResult();
                 mySqlContainer.CreateDatabaseAsync().GetAwaiter().GetResult();

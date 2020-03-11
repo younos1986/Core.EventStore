@@ -1,6 +1,6 @@
 ﻿namespace Core.EventStore.EFCore.PostgreSQL.Autofac
 {
-    public interface IEfCoreConfiguration
+    public interface IPostgreSqlConfiguration
     {
         string ConnectionString { get; set; }
         string PositionTableName { get; set; }
@@ -8,7 +8,7 @@
         string DefaultSchema { get; set; }
     }
 
-    public class EfCoreConfiguration : IEfCoreConfiguration
+    public class PostgreSqlConfiguration : IPostgreSqlConfiguration
     {
         public string ConnectionString { get; set; }
         
@@ -16,7 +16,7 @@
         
         public string IdempotenceTableName { get; set; } = "Idempotences";
 
-        public string DefaultSchema { get; set; } = "dbo";
+        public string DefaultSchema { get; set; }
 
         
     }

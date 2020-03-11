@@ -4,17 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.EventStore.EFCore.PostgreSQL.DbContexts
 {
-    public class EventStoreEfCoreDbContext: DbContext
+    public class EventStorePostgresDbContext: DbContext
     {
         public virtual DbSet<EventStoreIdempotence> EventStoreIdempotences { get; set; }
         
         public virtual DbSet<EventStorePosition> EventStorePositions { get; set; }
         
         
-        private readonly IEfCoreConfiguration _efCoreConfiguration;
-        public EventStoreEfCoreDbContext(DbContextOptions<EventStoreEfCoreDbContext> options, IEfCoreConfiguration efCoreConfiguration) : base(options)
+        private readonly IPostgreSqlConfiguration _efCoreConfiguration;
+        public EventStorePostgresDbContext(DbContextOptions<EventStorePostgresDbContext> options
+            //, IPostgreSqlConfiguration efCoreConfiguration
+            ) : base(options)
         {
-            _efCoreConfiguration = efCoreConfiguration;
+            //_efCoreConfiguration = efCoreConfiguration;
         }
 
         
@@ -23,7 +25,7 @@ namespace Core.EventStore.EFCore.PostgreSQL.DbContexts
             if (!optionsBuilder.IsConfigured)
             {
                 //Host=my_host;Database=my_db;Username=my_user;Password=my_pw
-                optionsBuilder.UseNpgsql(_efCoreConfiguration.ConnectionString);
+                //optionsBuilder.UseNpgsql(_efCoreConfiguration.ConnectionString);
             }
         }
 
@@ -32,10 +34,10 @@ namespace Core.EventStore.EFCore.PostgreSQL.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<EventStoreIdempotence>().ToTable(_efCoreConfiguration.IdempotenceTableName , _efCoreConfiguration.DefaultSchema);
+            modelBuilder.Entity<EventStoreIdempotence>().ToTable(_efCoreConfiguration.IdempotenceTableName);
             modelBuilder.Entity<EventStoreIdempotence>().HasKey(q => q.Id);
             
-            modelBuilder.Entity<EventStorePosition>().ToTable(_efCoreConfiguration.PositionTableName,_efCoreConfiguration.DefaultSchema);
+            modelBuilder.Entity<EventStorePosition>().ToTable(_efCoreConfiguration.PositionTableName);
             modelBuilder.Entity<EventStorePosition>().HasKey(q => q.Id);
 
         }

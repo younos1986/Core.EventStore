@@ -40,7 +40,7 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
             var found = await TryFindContainer();
             if (found == null)
             {
-                //await CreateImageIfNotExists();
+                await CreateImageIfNotExists();
 
                 var created = await CreateContainer();
                 if (created != null)

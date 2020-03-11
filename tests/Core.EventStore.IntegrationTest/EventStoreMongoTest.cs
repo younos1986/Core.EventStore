@@ -52,9 +52,7 @@ namespace Core.EventStore.IntegrationTest
             var createCustomerString = await createCustomerResponse.Content.ReadAsStringAsync();
             var createdCustomer = JsonConvert.DeserializeObject<CustomerCreated>(createCustomerString);
 
-            await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-            
-            var getCustomerResponse = await _queryApi.GetAsync($@"api/Customers/GetCustomer?id={ createdCustomer.Id }");
+            var getCustomerResponse = await _queryApi.TryGetAsync($@"api/Customers/GetCustomer?id={ createdCustomer.Id }");
             var getCustomerString = await getCustomerResponse.Content.ReadAsStringAsync();
             var retrievedCustomer = JsonConvert.DeserializeObject<CustomerCreated>(getCustomerString);
 

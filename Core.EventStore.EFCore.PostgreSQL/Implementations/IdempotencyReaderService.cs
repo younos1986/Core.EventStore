@@ -9,9 +9,9 @@ namespace Core.EventStore.EFCore.PostgreSQL.Implementations
 {
     public class IdempotenceReaderService: IIdempotenceReaderService
     {
-        private readonly IEfCoreConfiguration _mongoConfiguration;
-        private readonly EventStoreEfCoreDbContext _dbContext;
-        public IdempotenceReaderService(IEfCoreConfiguration mongoConfiguration , EventStoreEfCoreDbContext  dbContext)
+        private readonly IPostgreSqlConfiguration _mongoConfiguration;
+        private readonly EventStorePostgresDbContext _dbContext;
+        public IdempotenceReaderService(IPostgreSqlConfiguration mongoConfiguration , EventStorePostgresDbContext  dbContext)
         {
             _mongoConfiguration = mongoConfiguration;
             _dbContext = dbContext;
