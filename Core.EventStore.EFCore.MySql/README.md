@@ -1,4 +1,12 @@
-﻿CREATE DATABASE IF NOT EXISTS EventStoreDb;
+see the samples for more info
+
+
+
+### MySql tables
+
+
+```
+CREATE DATABASE IF NOT EXISTS EventStoreDb;
 
 use EventStoreDb;
 
@@ -26,3 +34,4 @@ create table if not exists Customers
     LastName varchar(32) not null,
     CreatedOn datetime not null
 );
+```
