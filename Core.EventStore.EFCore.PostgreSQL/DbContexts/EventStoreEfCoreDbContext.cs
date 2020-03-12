@@ -13,10 +13,10 @@ namespace Core.EventStore.EFCore.PostgreSQL.DbContexts
         
         private readonly IPostgreSqlConfiguration _efCoreConfiguration;
         public EventStorePostgresDbContext(DbContextOptions<EventStorePostgresDbContext> options
-            //, IPostgreSqlConfiguration efCoreConfiguration
+            , IPostgreSqlConfiguration efCoreConfiguration
             ) : base(options)
         {
-            //_efCoreConfiguration = efCoreConfiguration;
+            _efCoreConfiguration = efCoreConfiguration;
         }
 
         

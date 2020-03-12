@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MySqlCommandService.Commands;
@@ -20,6 +21,9 @@ namespace MySqlCommandService.Controllers
         [HttpPost, Route("[action]")]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand createCustomerCommand)
         {
+            if (Guid.Empty == createCustomerCommand.Id)
+                createCustomerCommand.Id = Guid.NewGuid();
+            
             CustomerDto customer = await _mediator.Send(createCustomerCommand);
             return Ok(customer);
         }

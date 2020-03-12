@@ -2,24 +2,31 @@
 using System.Threading.Tasks;
 using Core.EventStore.Contracts;
 using IntegrationEvents;
+using MySqlQueryService.MySqlConfig;
 
 namespace MySqlQueryService.Projectors
 {
     public class CustomerCreatedEventProjector : IProjector<CustomerCreatedForMySql>
     {
 
-        public static CustomerCreatedForMySql _CustomerCreated;
+        private MySqlDbContext _context;
         
-        
-        public CustomerCreatedEventProjector()
+        public CustomerCreatedEventProjector(MySqlDbContext context)
         {
+            _context = context;
         }
         
         public async Task HandleAsync(CustomerCreatedForMySql integrationEvent)
         {
-            Console.WriteLine(integrationEvent);
-            _CustomerCreated = integrationEvent;
-            await Task.CompletedTask;
+            try
+            {
+                await _context.Customers.AddAsync(integrationEvent);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

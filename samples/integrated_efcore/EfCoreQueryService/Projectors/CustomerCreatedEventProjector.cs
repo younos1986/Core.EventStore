@@ -2,13 +2,20 @@
 using Core.EventStore.Contracts;
 using IntegrationEvents;
 using System.Threading.Tasks;
+using EfCoreQueryService.EfCoreConfig;
 
 namespace EfCoreQueryService.Projectors
 {
     public class CustomerCreatedEventProjector : IProjector<CustomerCreatedForEfCore>
     {
 
-        public static CustomerCreatedForEfCore _CustomerCreated;
+        
+        private EfCoreDbContext _context;
+        
+        public CustomerCreatedEventProjector(EfCoreDbContext context)
+        {
+            _context = context;
+        }
         
         
         public CustomerCreatedEventProjector()
@@ -17,9 +24,15 @@ namespace EfCoreQueryService.Projectors
         
         public async Task HandleAsync(CustomerCreatedForEfCore integrationEvent)
         {
-            Console.WriteLine(integrationEvent);
-            _CustomerCreated = integrationEvent;
-            await Task.CompletedTask;
+            try
+            {
+                await _context.Customers.AddAsync(integrationEvent);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

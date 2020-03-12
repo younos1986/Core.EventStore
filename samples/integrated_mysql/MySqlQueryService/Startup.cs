@@ -1,12 +1,18 @@
+using System;
+using System.Reflection;
 using Autofac;
 using Core.EventStore.Dependencies;
+using Core.EventStore.MySql.EFCore.Autofac;
+using Core.EventStore.MySql.EFCore.DbContexts;
 using Core.EventStore.Registration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MySqlQueryService.IoCC.Modules;
+using MySqlQueryService.MySqlConfig;
 
 namespace MySqlQueryService
 {
@@ -23,6 +29,13 @@ namespace MySqlQueryService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<MySqlDbContext>(options =>
+                    {
+                        //Configuration["ConnectionStrings:ConnectionString"]
+                        options.UseMySql("server=localhost;Database=EventStoreDb;uid=root;pwd=TTTttt456;sslmode=none;");
+                    });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +68,7 @@ namespace MySqlQueryService
 
             //eventStoreReader.PerformReadStreamEventsForwardAsync("CustomerCreated", 0, 10, false, null);
             
-            eventStoreReader.PerformAll( null);
+            //eventStoreReader.PerformAll( null);
 
 
         }

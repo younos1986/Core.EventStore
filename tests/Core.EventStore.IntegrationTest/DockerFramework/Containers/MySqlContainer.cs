@@ -56,11 +56,19 @@ create table if not exists Idempotences
 
 create table if not exists Positions
 (
-    Id              char(38) not null
-        primary key,
-    CommitPosition  bigint   not null,
-    PreparePosition bigint   not null,
-    CreatedOn       datetime not null
+    Id char(38) not null primary key,
+    CommitPosition bigint not null,
+    PreparePosition bigint not null,
+    CreatedOn datetime not null
+);
+
+
+create table if not exists Customers
+(
+    Id char(38) not null primary key,
+    FirstName varchar(32) not null,
+    LastName varchar(32) not null,
+    CreatedOn datetime not null
 );
 
 ";

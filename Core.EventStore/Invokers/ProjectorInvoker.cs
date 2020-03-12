@@ -27,8 +27,8 @@ namespace Core.EventStore.Invokers
             BeforeInvoke(eventContext);
             InvokeEvent(eventContext);
 
-            PersistPositionAsync(eventContext).GetAwaiter();
-            PersistIdempotenceAsync(eventContext).GetAwaiter();
+            PersistPositionAsync(eventContext).GetAwaiter().GetResult();
+            PersistIdempotenceAsync(eventContext).GetAwaiter().GetResult();
 
             AfterInvoke(eventContext);
 

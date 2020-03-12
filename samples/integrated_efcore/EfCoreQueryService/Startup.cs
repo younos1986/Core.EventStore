@@ -1,9 +1,11 @@
 using Autofac;
 using Core.EventStore.Dependencies;
 using Core.EventStore.Registration;
+using EfCoreQueryService.EfCoreConfig;
 using EfCoreQueryService.IoCC.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +25,13 @@ namespace EfCoreQueryService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddDbContext<EfCoreDbContext>(options =>
+            {
+                //Configuration["ConnectionStrings:ConnectionString"]
+                options.UseSqlServer("Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;");
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
