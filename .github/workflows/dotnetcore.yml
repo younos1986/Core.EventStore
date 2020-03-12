@@ -18,3 +18,11 @@ jobs:
     - name: Test with dotnet
       #run: dotnet test ./Core.EventStore.sln --configuration Release
       run: dotnet test ./tests/Core.EventStore.UnitTest/Core.EventStore.UnitTest.csproj --configuration Release
+    - name: Deploy Core.EventStore NuGet Package
+      run: dotnet nuget push ./Core.EventStore/bin/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+    - name: Deploy Core.EventStore.EFCore.SqlServer NuGet Package
+      run: dotnet nuget push ./Core.EventStore.EFCore.SqlServer/bin/Debug/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+    - name: Deploy Core.EventStore.EFCore.MySql NuGet Package
+      run: dotnet nuget push ./Core.EventStore.EFCore.MySql/bin/Debug/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+    - name: Deploy ore.EventStore.Mongo NuGet Package
+      run: dotnet nuget push ./Core.EventStore.Mongo/bin/Debug/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
