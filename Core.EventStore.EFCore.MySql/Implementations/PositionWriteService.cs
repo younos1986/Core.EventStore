@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
 using Core.EventStore.MySql.EFCore.Autofac;
@@ -8,12 +9,10 @@ namespace Core.EventStore.MySql.EFCore.Implementations
 {
     public class PositionWriteService: IPositionWriteService
     {
-        private readonly IMySqlConfiguration _mongoConfiguration;
         private readonly EventStoreMySqlDbContext _dbContext;
-        public PositionWriteService(IMySqlConfiguration mongoConfiguration, EventStoreMySqlDbContext  dbContext)
+        public PositionWriteService(ILifetimeScope container)
         {
-            _mongoConfiguration = mongoConfiguration;
-            _dbContext = dbContext;
+            _dbContext = container.Resolve<EventStoreMySqlDbContext>();
         }
         
         public async Task InsertOneAsync(EventStorePosition entity)

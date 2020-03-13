@@ -40,8 +40,8 @@ namespace MySqlQueryService
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env , 
-            IPersistentSubscriptionClient persistentSubscriptionClient,
-            IEventStoreReader eventStoreReader 
+            IPersistentSubscriptionClient persistentSubscriptionClient
+            //, IEventStoreReader eventStoreReader 
         )
         {
             if (env.IsDevelopment())

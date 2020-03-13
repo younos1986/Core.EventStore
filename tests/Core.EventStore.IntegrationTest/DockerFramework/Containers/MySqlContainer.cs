@@ -6,7 +6,7 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
 {
     public class MySqlContainer : DockerContainer
     {
-        //private const string LocalConnectionString = "server=localhost;uid=root;pwd=Password123;sslmode=none;";
+        //private const string LocalConnectionString = "server=localhost;uid=root;pwd=TTTttt456;sslmode=none;";
         
         public string Server { get; private set; }
         public string DatabaseName { get; private set; }
@@ -135,6 +135,7 @@ create table if not exists Customers
                             Console.WriteLine(ex.Message);
                         }
 
+                        //await Task.CompletedTask;
                         return TimeSpan.FromSeconds(1);
                     }
 

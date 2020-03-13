@@ -27,8 +27,8 @@ namespace PostgresQueryService
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env , 
-            IPersistentSubscriptionClient persistentSubscriptionClient,
-            IEventStoreReader eventStoreReader 
+            IPersistentSubscriptionClient persistentSubscriptionClient
+            //, IEventStoreReader eventStoreReader 
         )
         {
             if (env.IsDevelopment())
@@ -55,7 +55,7 @@ namespace PostgresQueryService
 
             //eventStoreReader.PerformReadStreamEventsForwardAsync("CustomerCreated", 0, 10, false, null);
             
-            eventStoreReader.PerformAll( null);
+            //eventStoreReader.PerformAll( null);
 
 
         }

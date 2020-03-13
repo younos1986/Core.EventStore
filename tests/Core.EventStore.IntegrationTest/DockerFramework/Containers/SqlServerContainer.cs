@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 
 namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
@@ -168,10 +166,12 @@ END
 
                             return TimeSpan.Zero;
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Console.WriteLine(ex.Message);
                         }
 
+                        //await Task.CompletedTask;
                         return TimeSpan.FromSeconds(1);
                     }
 

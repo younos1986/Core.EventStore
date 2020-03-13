@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using EventStore.ClientAPI;
-using EventStore.ClientAPI.SystemData;
-using Microsoft.Data.SqlClient;
 using MongoDB.Driver;
 
 namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
 {
     public class MongoDbContainer : DockerContainer
     {
-
         public MongoDbContainer()
         {
             Configuration = new MongoDbContainerConfiguration();
         }
-
 
         private class MongoDbContainerConfiguration : DockerContainerConfiguration
         {
@@ -24,7 +18,7 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
             {
                 Image = new ImageSettings
                 {
-                    Registry = "", // "mcr.microsoft.com",
+                    Registry = "",
                     Name = "mongo"
                 };
 
@@ -57,8 +51,9 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
 
                             return TimeSpan.Zero;
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Console.WriteLine(ex.Message);
                         }
 
                         await Task.CompletedTask;

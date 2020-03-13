@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Core.EventStore.IntegrationTest
+namespace Core.EventStore.IntegrationTest.Infrastructures
 {
     public static  class HttpClientExtensions
     {
@@ -10,14 +10,14 @@ namespace Core.EventStore.IntegrationTest
         public static async Task<HttpResponseMessage> TryGetAsync(this HttpClient client, string requestUri)
         {
             var timeToRest = 0;
+            var counter = 0;
             HttpResponseMessage response = null;
             do
             {
                 await Task.Delay(timeToRest);
                 response = await client.GetAsync(requestUri);
                 timeToRest = 1;
-
-            } while (response.StatusCode == HttpStatusCode.NoContent);
+            } while (response.StatusCode == HttpStatusCode.NoContent &&  counter < 10);
             return response;
         }
         

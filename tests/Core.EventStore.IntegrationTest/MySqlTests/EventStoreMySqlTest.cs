@@ -2,24 +2,13 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac;
-using Core.EventStore.Autofac;
-using Core.EventStore.Dependencies;
-using Core.EventStore.IntegrationTest.EfCoreSqlServers;
-using Core.EventStore.Mongo.Autofac;
-using Core.EventStore.IntegrationTest.DockerFramework.Containers;
-using Core.EventStore.IntegrationTest.MongoServers;
-using Core.EventStore.IntegrationTest.MySqlServers;
-using EventStore.ClientAPI;
-using EventStore.ClientAPI.SystemData;
+using Core.EventStore.IntegrationTest.Infrastructures;
 using FluentAssertions;
 using IntegrationEvents;
-//using Microsoft.AspNetCore.TestHost;
-using MongoDB.Driver;
 using Newtonsoft.Json;
-using Xunit;
+using Xunit; //using Microsoft.AspNetCore.TestHost;
 
-namespace Core.EventStore.IntegrationTest
+namespace Core.EventStore.IntegrationTest.MySqlTests
 {
    
     public class EventStoreMySqlTest :IClassFixture<ModuleFixture>
@@ -28,11 +17,8 @@ namespace Core.EventStore.IntegrationTest
         private readonly HttpClient _commandApi;
         public EventStoreMySqlTest(ModuleFixture fixture)
         {
-            // var eventStoreContainer =  fixture.Container.Resolve<EventStoreContainer>();
-            // var sqlContainer =  fixture.Container.Resolve<SqlServerContainer>();
-
-            _commandApi = new MySqlCommandServiceApi().GetClient().GetAwaiter().GetResult();
-            _queryApi =  new MySqlQueryServiceApi().GetClient().GetAwaiter().GetResult();
+            _commandApi = new Server().GetClient<MySqlCommandService.Startup>().GetAwaiter().GetResult();
+            _queryApi = new Server().GetClient<MySqlQueryService.Startup>().GetAwaiter().GetResult();
         }
 
         [Fact]

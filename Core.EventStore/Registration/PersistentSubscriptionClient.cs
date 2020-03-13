@@ -19,21 +19,29 @@ namespace Core.EventStore.Registration
         private readonly IEventStoreConnection _eventStoreConnection;
         private readonly IEventStoreConnectionManager _eventStoreConnectionManager;
         private readonly ProjectorInvoker _projectorInvoker;
-        private ISubscriptionConfiguration _subscriptionConfiguration;
+        private readonly ISubscriptionConfiguration _subscriptionConfiguration;
         private readonly  ILifetimeScope _container;
 
         public PersistentSubscriptionClient(
-            IEventStoreConnection eventStoreConnection,
-            ProjectorInvoker projectorInvoker,
-            IEventStoreConnectionManager eventStoreConnectionManager,
-            ISubscriptionConfiguration subscriptionConfiguration,
+            // IEventStoreConnection eventStoreConnection,
+            // ProjectorInvoker projectorInvoker,
+            // IEventStoreConnectionManager eventStoreConnectionManager,
+            // ISubscriptionConfiguration subscriptionConfiguration,
             ILifetimeScope  container)
         {
-            _eventStoreConnection = eventStoreConnection;
-            _projectorInvoker = projectorInvoker;
-            _eventStoreConnectionManager = eventStoreConnectionManager;
-            _subscriptionConfiguration = subscriptionConfiguration;
             _container = container;
+            
+            _eventStoreConnection = _container.Resolve<IEventStoreConnection>();
+            _projectorInvoker = _container.Resolve<ProjectorInvoker>();
+            _eventStoreConnectionManager = _container.Resolve<IEventStoreConnectionManager>();
+            _subscriptionConfiguration = _container.Resolve<ISubscriptionConfiguration>();
+            
+            //
+            // _eventStoreConnection = eventStoreConnection;
+            // _projectorInvoker = projectorInvoker;
+            // _eventStoreConnectionManager = eventStoreConnectionManager;
+            // _subscriptionConfiguration = subscriptionConfiguration;
+            
         }
 
         private UserCredentials User;

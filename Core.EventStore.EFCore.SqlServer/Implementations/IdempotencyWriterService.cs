@@ -8,11 +8,9 @@ namespace Core.EventStore.EFCore.SqlServer.Implementations
 {
     public class IdempotenceWriterService: IIdempotenceWriterService
     {
-        private readonly IEfCoreConfiguration _mongoConfiguration;
         private readonly EventStoreEfCoreDbContext _dbContext;
-        public IdempotenceWriterService(IEfCoreConfiguration mongoConfiguration, EventStoreEfCoreDbContext  dbContext)
+        public IdempotenceWriterService(EventStoreEfCoreDbContext  dbContext)
         {
-            _mongoConfiguration = mongoConfiguration;
             _dbContext = dbContext;
         }
         

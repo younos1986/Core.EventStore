@@ -1,4 +1,4 @@
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
@@ -8,16 +8,15 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Core.EventStore.IntegrationTest.MongoServers
+namespace Core.EventStore.IntegrationTest.Infrastructures
 {
-    public class MongoCommandServiceApi
+    public class Server
     {
-        public async Task<HttpClient> GetClient()
+        public async Task<HttpClient> GetClient<T>() where T : class
         {
-            var path = Assembly.GetAssembly(typeof(MongoCommandServiceApi))
+            var path = Assembly.GetAssembly(typeof(Server))
                 .Location;
 
-            
             IHostBuilder hostBuilder =
                 Host.CreateDefaultBuilder()
                     .UseServiceProviderFactory(new AutofacServiceProviderFactory()) //<--NOTE THIS
@@ -26,7 +25,7 @@ namespace Core.EventStore.IntegrationTest.MongoServers
                     {
                         // Add TestServer
                         webBuilder.UseTestServer();
-                        webBuilder.UseStartup<MongoCommandService.Startup>();
+                        webBuilder.UseStartup<T>();
                         webBuilder.ConfigureAppConfiguration(cb =>
                         {
                             cb.AddJsonFile("appsettings.json", optional: false)
@@ -41,7 +40,6 @@ namespace Core.EventStore.IntegrationTest.MongoServers
             var client = host.GetTestClient();
 
             return client;
-
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Core.EventStore.Autofac;
+using Core.EventStore.Configurations;
 using Core.EventStore.MySql.EFCore.Autofac;
 using IntegrationEvents;
+using Microsoft.Extensions.Configuration;
 using MySqlQueryService.InvokerPipelines;
 
 namespace MySqlQueryService.IoCC.Modules
@@ -12,24 +14,25 @@ namespace MySqlQueryService.IoCC.Modules
             {
                 builder.RegisterEventStore(initializationConfiguration =>
                     {
-                        initializationConfiguration.Username = "admin";
-                        initializationConfiguration.Password = "changeit";
-                        initializationConfiguration.DefaultPort = 1113;
-
-                        //initializationConfiguration.IsDockerized = true;
-                        //initializationConfiguration.DockerContainerName = "eventstore";
-
-                        initializationConfiguration.IsDockerized = false;
-                        initializationConfiguration.ConnectionUri = "127.0.0.1";
+                        var configuration = initializationConfiguration.Resolve<IConfiguration>();
+                        var eventStoreConnectionString = configuration.GetValue<string>("CoreEventStore:EventStoreConfig:ConnectionString");
+                        var init = new InitializationConfiguration()
+                        {
+                            EventStoreConnectionString = eventStoreConnectionString,
+                        };
+                        return init;
                     })
                     .SubscribeRead(subscriptionConfiguration =>
                     {
                         subscriptionConfiguration.AddEvent<CustomerCreatedForMySql>(nameof(CustomerCreatedForMySql));
                         subscriptionConfiguration.AddEvent<CustomerModified>(nameof(CustomerModified));
                     }, new CustomProjectorInvoker())
-                    .UseeMySql(configuration =>
+                    .UseeMySql(context =>
                     {
+                        IMySqlConfiguration configuration = new MySqlConfiguration();
                         configuration.ConnectionString = "server=localhost;Database=EventStoreDb;uid=root;pwd=TTTttt456;sslmode=none;";
+                        return configuration;
+                        
                     })
                     .KeepPositionInMySql()
                     .KeepIdempotenceInMySql();
