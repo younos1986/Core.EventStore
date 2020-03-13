@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
 using Core.EventStore.EFCore.SqlServer.Autofac;
@@ -12,12 +13,11 @@ namespace Core.EventStore.EFCore.SqlServer.Implementations
 {
     public class IdempotenceReaderService: IIdempotenceReaderService
     {
-        private readonly IEfCoreConfiguration _mongoConfiguration;
+        
         private readonly EventStoreEfCoreDbContext _dbContext;
-        public IdempotenceReaderService(IEfCoreConfiguration mongoConfiguration , EventStoreEfCoreDbContext  dbContext)
+        public IdempotenceReaderService(ILifetimeScope container)
         {
-            _mongoConfiguration = mongoConfiguration;
-            _dbContext = dbContext;
+            _dbContext = container.Resolve<EventStoreEfCoreDbContext>();
         }
         
         public async Task<bool> IsProcessedBefore(Guid streamId)

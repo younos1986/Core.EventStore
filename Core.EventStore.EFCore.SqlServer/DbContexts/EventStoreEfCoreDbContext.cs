@@ -1,4 +1,5 @@
 ﻿using System;
+using Autofac;
 using Core.EventStore.Configurations;
 using Core.EventStore.EFCore.SqlServer.Autofac;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,9 @@ namespace Core.EventStore.EFCore.SqlServer.DbContexts
         
         
         private readonly IEfCoreConfiguration _efCoreConfiguration;
-        public EventStoreEfCoreDbContext(DbContextOptions<EventStoreEfCoreDbContext> options, IEfCoreConfiguration efCoreConfiguration) : base(options)
+        public EventStoreEfCoreDbContext(DbContextOptions<EventStoreEfCoreDbContext> options) : base(options)
         {
-            _efCoreConfiguration = efCoreConfiguration;
+            //_efCoreConfiguration = container.Resolve<IEfCoreConfiguration>();
         }
 
         
@@ -23,7 +24,7 @@ namespace Core.EventStore.EFCore.SqlServer.DbContexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_efCoreConfiguration.ConnectionString);
+                //optionsBuilder.UseSqlServer(_efCoreConfiguration.ConnectionString);
             }
         }
 
@@ -32,10 +33,10 @@ namespace Core.EventStore.EFCore.SqlServer.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<EventStoreIdempotence>().ToTable(_efCoreConfiguration.IdempotenceTableName , _efCoreConfiguration.DefaultSchema);
+            modelBuilder.Entity<EventStoreIdempotence>().ToTable("Idempotences");
             modelBuilder.Entity<EventStoreIdempotence>().HasKey(q => q.Id);
             
-            modelBuilder.Entity<EventStorePosition>().ToTable(_efCoreConfiguration.PositionTableName,_efCoreConfiguration.DefaultSchema);
+            modelBuilder.Entity<EventStorePosition>().ToTable("Positions");
             modelBuilder.Entity<EventStorePosition>().HasKey(q => q.Id);
 
         }

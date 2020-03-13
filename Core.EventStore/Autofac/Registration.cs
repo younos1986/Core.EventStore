@@ -13,19 +13,33 @@ namespace Core.EventStore.Autofac
 {
     public static class Registration
     {
-        public static ContainerBuilder RegisterEventStore(this ContainerBuilder containerBuilder , Action<InitializationConfiguration> initializationConfiguration)
+        public static ContainerBuilder RegisterEventStore(this ContainerBuilder containerBuilder , Func<IComponentContext, InitializationConfiguration> initializationConfiguration)
         {
-            InitializationConfiguration configuration = new InitializationConfiguration();
-            initializationConfiguration.Invoke(configuration);
-
-            IEventStoreConnection EventStoreConnection = EventStoreConnectionBuilder.Build(configuration);
+            InitializationConfiguration configuration = null;
+            containerBuilder.Register<IEventStoreConnection>((Func<IComponentContext, IEventStoreConnection>) (context =>
+            {
+                configuration = initializationConfiguration(context);
+                containerBuilder.RegisterInstance(configuration).As<InitializationConfiguration>().IfNotRegistered(typeof(InitializationConfiguration)).SingleInstance();
+                
+                
+                IEventStoreConnection eventStoreConnection = EventStoreConnectionBuilder.Build(configuration);
+                return eventStoreConnection;
+            })).As<IEventStoreConnection>().SingleInstance();
             
-            containerBuilder.RegisterInstance(configuration).As<InitializationConfiguration>().IfNotRegistered(typeof(InitializationConfiguration)).SingleInstance();
-            containerBuilder.RegisterInstance(EventStoreConnection).As<IEventStoreConnection>().SingleInstance();
+            
+            //containerBuilder.RegisterInstance(configuration).As<InitializationConfiguration>().IfNotRegistered(typeof(InitializationConfiguration)).SingleInstance();
+            
+            //InitializationConfiguration configuration = new InitializationConfiguration();
+            //initializationConfiguration.Invoke(configuration);
+            //IEventStoreConnection EventStoreConnection = EventStoreConnectionBuilder.Build(configuration);
+            //containerBuilder.RegisterInstance(EventStoreConnection).As<IEventStoreConnection>().SingleInstance();
+            
+            
             containerBuilder.RegisterType<EventStoreConnectionManager>().As<IEventStoreConnectionManager>().SingleInstance();
             containerBuilder.RegisterType<PersistentSubscriptionClient>().As<IPersistentSubscriptionClient>().SingleInstance();//.PreserveExistingDefaults();
             containerBuilder.RegisterType<EventStoreDbContext>().As<IEventStoreDbContext>().SingleInstance();
             containerBuilder.RegisterType<EventStoreReader>().As<IEventStoreReader>().SingleInstance();
+            
             
             return containerBuilder;
         }

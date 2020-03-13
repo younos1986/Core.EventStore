@@ -28,16 +28,16 @@ namespace EfCoreQueryService
             
             services.AddDbContext<EfCoreDbContext>(options =>
             {
-                //Configuration["ConnectionStrings:ConnectionString"]
-                options.UseSqlServer("Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;");
+                //"Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;"
+                options.UseSqlServer(Configuration["CoreEventStore:SqlServerConfig:ConnectionString"]);
             });
             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env , 
-            IPersistentSubscriptionClient persistentSubscriptionClient,
-            IEventStoreReader eventStoreReader 
+            IPersistentSubscriptionClient persistentSubscriptionClient
+            //, IEventStoreReader eventStoreReader 
         )
         {
             if (env.IsDevelopment())
@@ -64,7 +64,7 @@ namespace EfCoreQueryService
 
             //eventStoreReader.PerformReadStreamEventsForwardAsync("CustomerCreated", 0, 10, false, null);
             
-            eventStoreReader.PerformAll( null);
+            //eventStoreReader.PerformAll( null);
 
 
         }

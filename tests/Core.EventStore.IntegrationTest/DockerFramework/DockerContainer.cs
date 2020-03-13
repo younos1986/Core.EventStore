@@ -8,7 +8,7 @@ using Docker.DotNet.Models;
 
 namespace Core.EventStore.IntegrationTest.DockerFramework
 {
-   public abstract class DockerContainer
+    public abstract class DockerContainer
     {
         private const string UnixPipe = "unix:///var/run/docker.sock";
         private const string WindowsPipe = "npipe://./pipe/docker_engine";
@@ -50,11 +50,9 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
             }
             else
             {
-                //await StartContainer(found);
-                
                 await StopContainer(found);
                 await RemoveContainer(found);
-                
+
                 var created = await CreateContainer();
                 if (created != null)
                 {
@@ -66,40 +64,18 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
         private async Task<string> TryFindContainer()
         {
             IList<ContainerListResponse> containers = null;
-            try
-            {
-                // containers = await _client.Containers.ListContainersAsync(
-                //     new ContainersListParameters
-                //     {
-                //         All = true,
-                //         Filters = new Dictionary<string, IDictionary<string, bool>>
-                //         {
-                //             ["name"] = new Dictionary<string, bool>
-                //             {
-                //                 [Configuration.Container.Name] = true
-                //             }
-                //         }
-                //     }
-                //     ).ConfigureAwait(false);
-                //
-                containers = await _client.Containers.ListContainersAsync(new ContainersListParameters
+            containers = await _client.Containers.ListContainersAsync(new ContainersListParameters
                 {
                     All = true
-                    }
-                 ).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+                }
+            ).ConfigureAwait(false);
 
             var formattedName = "/" + Configuration.Container.Name;
-            
+
             var id = containers
                 ?.FirstOrDefault(container => container.Names.Contains(formattedName))?.ID;
-            
+
             return id;
-            //return containers.FirstOrDefault(container => container.State != "exited")?.ID;
         }
 
         private async Task<string> CreateContainer()
@@ -116,13 +92,14 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
                     {
                         PortBindings = Configuration.Container.PortBindings.ToDictionary(
                             binding => $"{binding.GuestPort}/tcp",
-                            binding => (IList<Docker.DotNet.Models.PortBinding>)new List<Docker.DotNet.Models.PortBinding>
-                            {
-                                new Docker.DotNet.Models.PortBinding
+                            binding =>
+                                (IList<Docker.DotNet.Models.PortBinding>) new List<Docker.DotNet.Models.PortBinding>
                                 {
-                                    HostPort = binding.HostPort.ToString(CultureInfo.InvariantCulture)
-                                }
-                            })
+                                    new Docker.DotNet.Models.PortBinding
+                                    {
+                                        HostPort = binding.HostPort.ToString(CultureInfo.InvariantCulture)
+                                    }
+                                })
                     }
                 })
                 .ConfigureAwait(false);
@@ -147,33 +124,21 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
                     result = await Configuration.WaitUntilAvailable(attempt++);
                 }
             }
-
-            if (Configuration.PreTestIfAvailable != null)
-            {
-                var attempt = 0;
-                var result = await Configuration.PreTestIfAvailable(attempt++);
-                while (result > TimeSpan.Zero)
-                {
-                    await Task.Delay(result);
-                    result = await Configuration.PreTestIfAvailable(attempt++);
-                }
-            }
-            
         }
 
         private async Task StopContainer(string id)
         {
             await _client
                 .Containers
-                .StopContainerAsync(id, new ContainerStopParameters { WaitBeforeKillSeconds = 10 })
+                .StopContainerAsync(id, new ContainerStopParameters {WaitBeforeKillSeconds = 10})
                 .ConfigureAwait(false);
         }
 
-        private async Task RemoveContainer(string id, bool force= true)
+        private async Task RemoveContainer(string id, bool force = true)
         {
             await _client
                 .Containers
-                .RemoveContainerAsync(id, new ContainerRemoveParameters { Force = force })
+                .RemoveContainerAsync(id, new ContainerRemoveParameters {Force = force})
                 .ConfigureAwait(false);
         }
 
@@ -199,7 +164,7 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
         {
             var images = await _client
                 .Images
-                .ListImagesAsync(new ImagesListParameters { MatchName = Configuration.Image.RegistryQualifiedName })
+                .ListImagesAsync(new ImagesListParameters {MatchName = Configuration.Image.RegistryQualifiedName})
                 .ConfigureAwait(false);
             return images.Count != 0;
         }
@@ -218,6 +183,7 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
                     }
                 }
             }
+
             _client.Dispose();
         }
 

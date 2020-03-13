@@ -10,7 +10,5 @@ namespace Core.EventStore.IntegrationTest.DockerFramework
         public ContainerSettings Container { get; set; }
 
         public Func<int, Task<TimeSpan>> WaitUntilAvailable { get; set; } = attempts => Task.FromResult(TimeSpan.Zero);
-        
-        public Func<int, Task<TimeSpan>> PreTestIfAvailable { get; set; } = attempts => Task.FromResult(TimeSpan.Zero);
     }
 }

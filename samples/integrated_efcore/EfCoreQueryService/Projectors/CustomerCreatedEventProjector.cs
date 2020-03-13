@@ -8,18 +8,12 @@ namespace EfCoreQueryService.Projectors
 {
     public class CustomerCreatedEventProjector : IProjector<CustomerCreatedForEfCore>
     {
-
         
         private EfCoreDbContext _context;
         
         public CustomerCreatedEventProjector(EfCoreDbContext context)
         {
             _context = context;
-        }
-        
-        
-        public CustomerCreatedEventProjector()
-        {
         }
         
         public async Task HandleAsync(CustomerCreatedForEfCore integrationEvent)

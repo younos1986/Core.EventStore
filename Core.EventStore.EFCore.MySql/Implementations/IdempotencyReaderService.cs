@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Contracts;
 using Core.EventStore.MySql.EFCore.Autofac;
 using Core.EventStore.MySql.EFCore.DbContexts;
@@ -9,12 +10,10 @@ namespace Core.EventStore.MySql.EFCore.Implementations
 {
     public class IdempotenceReaderService: IIdempotenceReaderService
     {
-        private readonly IMySqlConfiguration _mongoConfiguration;
         private readonly EventStoreMySqlDbContext _dbContext;
-        public IdempotenceReaderService(IMySqlConfiguration mongoConfiguration , EventStoreMySqlDbContext  dbContext)
+        public IdempotenceReaderService(ILifetimeScope container)
         {
-            _mongoConfiguration = mongoConfiguration;
-            _dbContext = dbContext;
+            _dbContext = container.Resolve<EventStoreMySqlDbContext>();
         }
         
         public async Task<bool> IsProcessedBefore(Guid streamId)

@@ -1,9 +1,12 @@
 ﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Core.EventStore.Autofac;
+using Core.EventStore.Configurations;
 using Core.EventStore.EFCore.SqlServer.Autofac;
 using EfCoreQueryService.InvokerPipelines;
 using IntegrationEvents;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace EfCoreQueryService.IoCC.Modules
 {
@@ -11,32 +14,33 @@ namespace EfCoreQueryService.IoCC.Modules
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterEventStore(initializationConfiguration =>
+                builder.RegisterEventStore(context =>
                     {
-                        initializationConfiguration.Username = "admin";
-                        initializationConfiguration.Password = "changeit";
-                        initializationConfiguration.DefaultPort = 1113;
-
-                        //initializationConfiguration.IsDockerized = true;
-                        //initializationConfiguration.DockerContainerName = "eventstore";
-
-                        initializationConfiguration.IsDockerized = false;
-                        initializationConfiguration.ConnectionUri = "127.0.0.1";
+                        var configuration = context.Resolve<IConfiguration>();
+                        var eventStoreConnectionString = configuration.GetValue<string>("CoreEventStore:EventStoreConfig:ConnectionString");
+                        var init = new InitializationConfiguration()
+                        {
+                            EventStoreConnectionString = eventStoreConnectionString,
+                        };
+                        return init;
                     })
                     .SubscribeRead(subscriptionConfiguration =>
                     {
                         subscriptionConfiguration.AddEvent<CustomerCreatedForEfCore>(nameof(CustomerCreatedForEfCore));
                     }, new CustomProjectorInvoker())
-                    .UseeEfCore(configuration =>
+                    .UseeEfCore(context =>
                     {
-                        configuration.ConnectionString = "Data Source=localhost,1433;Initial Catalog=EventStoreDb;Persist Security Info=True;User ID=sa;Password=TTTttt456!@#;Max Pool Size=80;";
-                        configuration.DefaultSchema = "dbo";
-                        
-                        //configuration.DbContext = new DbContext();   //implement
-                        
+                        var configuration = context.Resolve<IConfiguration>();
+
+                        var efCoreConfiguration = new EfCoreConfiguration();
+                        efCoreConfiguration.ConnectionString  = configuration.GetValue<string>("CoreEventStore:SqlServerConfig:ConnectionString"); 
+                        efCoreConfiguration.DefaultSchema = configuration.GetValue<string>("CoreEventStore:SqlServerConfig:DefaultSchema");
+
+                        return efCoreConfiguration;
                     })
                     .KeepPositionInEfCore()
                     .KeepIdempotenceInEfCore();
+                
             }
         }
     }

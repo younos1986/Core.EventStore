@@ -2,38 +2,26 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac;
-using Core.EventStore.Autofac;
-using Core.EventStore.Dependencies;
-using Core.EventStore.IntegrationTest.MongoServers;
-using Core.EventStore.Mongo.Autofac;
-using Core.EventStore.IntegrationTest.DockerFramework.Containers;
-using EventStore.ClientAPI;
-using EventStore.ClientAPI.SystemData;
+using Core.EventStore.IntegrationTest.Infrastructures;
 using FluentAssertions;
 using IntegrationEvents;
-//using Microsoft.AspNetCore.TestHost;
-using MongoDB.Driver;
 using Newtonsoft.Json;
-using Xunit;
+using Xunit; //using Microsoft.AspNetCore.TestHost;
 
-namespace Core.EventStore.IntegrationTest
+namespace Core.EventStore.IntegrationTest.MongoTests
 {
    
     public class EventStoreMongoTest  :IClassFixture<ModuleFixture>
     {
       
-        private HttpClient _queryApi;
-        private HttpClient _commandApi;
+        private readonly HttpClient _queryApi;
+        private readonly HttpClient _commandApi;
         
         
         public EventStoreMongoTest(ModuleFixture fixture)
         {
-            // var eventStoreContainer =  fixture.Container.Resolve<EventStoreContainer>();
-            // var mongoDbContainer =  fixture.Container.Resolve<MongoDbContainer>();
-
-            _commandApi = new MongoCommandServiceApi().GetClient().GetAwaiter().GetResult();
-            _queryApi =  new MongoQueryServiceApi().GetClient().GetAwaiter().GetResult();
+            _commandApi = new Server().GetClient<MongoCommandService.Startup>().GetAwaiter().GetResult();
+            _queryApi = new Server().GetClient<MongoQueryService.Startup>().GetAwaiter().GetResult();
         }
        
 

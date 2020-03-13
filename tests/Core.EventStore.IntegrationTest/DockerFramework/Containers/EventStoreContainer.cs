@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
-using Microsoft.Data.SqlClient;
 
 namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
 {
@@ -14,12 +13,10 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
         private const string Username = "admin";
         private const string Password = "changeit";
         
-        
         public EventStoreContainer()
         {
             Configuration = new EventStoreContainerConfiguration();
         }
-
         
         private class EventStoreContainerConfiguration : DockerContainerConfiguration
         {
@@ -55,26 +52,6 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
                     {
                         try
                         {
-                            await Task.Delay(0).ConfigureAwait(false);
-                            return TimeSpan.Zero;
-                        }
-                        catch
-                        {
-                        }
-
-                        return TimeSpan.FromSeconds(1);
-                    }
-
-                    throw new TimeoutException(
-                        $"The container {Container.Name} did not become available in a timely fashion.");
-                };
-                PreTestIfAvailable= async attempt =>
-                {
-                    if (attempt <= 30)
-                    {
-                        try
-                        {
-                            
                             var endpoint = new Uri("tcp://127.0.0.1:1113");
                             var settings = ConnectionSettings
                                 .Create()
@@ -85,19 +62,14 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
                             var connection = EventStoreConnection.Create(settings, endpoint, connectionName);
                             await connection.ConnectAsync();
                             connection.Close();
-                            
-                            // using (var connection = new SqlConnection(builder.ConnectionString))
-                            // {
-                            //     await connection.OpenAsync();
-                            //     connection.Close();
-                            // }
-
                             return TimeSpan.Zero;
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Console.WriteLine(ex.Message);
                         }
 
+                        //await Task.CompletedTask;
                         return TimeSpan.FromSeconds(1);
                     }
 
@@ -106,9 +78,5 @@ namespace Core.EventStore.IntegrationTest.DockerFramework.Containers
                 };
             }
         }
-        
-        
-        
-        
     }
 }

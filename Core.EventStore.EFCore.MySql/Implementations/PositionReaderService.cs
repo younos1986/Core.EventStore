@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
 using Core.EventStore.IdGeneration;
@@ -14,9 +15,9 @@ namespace Core.EventStore.MySql.EFCore.Implementations
     public class PositionReaderService: IPositionReaderService
     {
         private readonly EventStoreMySqlDbContext _dbContext;
-        public PositionReaderService(EventStoreMySqlDbContext  dbContext)
+        public PositionReaderService(ILifetimeScope container)
         {
-            _dbContext = dbContext;
+            _dbContext = container.Resolve<EventStoreMySqlDbContext>();
         }
         
         public async Task<EventStorePosition> GetCurrentPosition()
