@@ -19,7 +19,7 @@ namespace Core.EventStore.MySql.EFCore.Autofac
             containerBuilder.Register<EventStoreMySqlDbContext>((Func<IComponentContext, EventStoreMySqlDbContext>) (context =>
             {
                 var configuration = mySqlConfiguration(context);
-                var dbContext = new EventStoreMySqlDbContext(DbContextOptionsFactory.Get(configuration.ConnectionString));
+                var dbContext = new EventStoreMySqlDbContext(DbContextOptionsFactory.Get(configuration.ConnectionString) , configuration);
                 return dbContext;
             })).As<EventStoreMySqlDbContext>().IfNotRegistered(typeof(EventStoreMySqlDbContext)).SingleInstance();
             
