@@ -32,8 +32,8 @@ namespace MySqlQueryService
 
             services.AddDbContext<MySqlDbContext>(options =>
                     {
-                        //Configuration["ConnectionStrings:ConnectionString"]
-                        options.UseMySql("server=localhost;Database=EventStoreDb;uid=root;pwd=TTTttt456;sslmode=none;");
+                        //Configuration["CoreEventStore:MySqlConfig:ConnectionString"]
+                        options.UseMySql(Configuration["CoreEventStore:MySqlConfig:ConnectionString"]);
                     });
 
         }

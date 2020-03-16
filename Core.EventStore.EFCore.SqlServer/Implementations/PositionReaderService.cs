@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
 using Core.EventStore.EFCore.SqlServer.Autofac;
@@ -15,9 +16,10 @@ namespace Core.EventStore.EFCore.SqlServer.Implementations
     public class PositionReaderService: IPositionReaderService
     {
         private readonly EventStoreEfCoreDbContext _dbContext;
-        public PositionReaderService(EventStoreEfCoreDbContext  dbContext)
+        public PositionReaderService(ILifetimeScope container)
         {
-            _dbContext = dbContext;
+            var _configuration = container.Resolve<IEfCoreConfiguration>();
+            _dbContext = container.Resolve<EventStoreEfCoreDbContext>();
         }
         
         public async Task<EventStorePosition> GetCurrentPosition()

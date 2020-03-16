@@ -17,6 +17,7 @@ namespace Core.EventStore.MySql.EFCore.Implementations
         private readonly EventStoreMySqlDbContext _dbContext;
         public PositionReaderService(ILifetimeScope container)
         {
+            var _configuration = container.Resolve<IMySqlConfiguration>();
             _dbContext = container.Resolve<EventStoreMySqlDbContext>();
         }
         

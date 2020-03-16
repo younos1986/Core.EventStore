@@ -28,7 +28,7 @@ namespace Core.EventStore.IntegrationTest.SqlServerTests
             var jsonCustomer = JsonConvert.SerializeObject(command);
             
             // create a customer
-            var customerData = new StringContent(jsonCustomer, UTF8Encoding.UTF8, "application/json");
+            var customerData = new StringContent(jsonCustomer, Encoding.UTF8, "application/json");
             var createCustomerResponse = await _commandApi.PostAsync("api/Customers/CreateCustomer", customerData);
             createCustomerResponse.EnsureSuccessStatusCode();
 
