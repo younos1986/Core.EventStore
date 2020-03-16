@@ -13,7 +13,7 @@ namespace Core.EventStore.EFCore.SqlServer.DbContexts
         public virtual DbSet<EventStorePosition> EventStorePositions { get; set; }
         
         
-        private readonly IEfCoreConfiguration _efCoreConfiguration;
+        //private readonly IEfCoreConfiguration _efCoreConfiguration;
         public EventStoreEfCoreDbContext(DbContextOptions<EventStoreEfCoreDbContext> options) : base(options)
         {
             //_efCoreConfiguration = container.Resolve<IEfCoreConfiguration>();

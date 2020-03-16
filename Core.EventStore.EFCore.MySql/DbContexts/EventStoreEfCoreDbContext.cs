@@ -12,8 +12,10 @@ namespace Core.EventStore.MySql.EFCore.DbContexts
         
         
         private readonly IMySqlConfiguration _efCoreConfiguration;
-        public EventStoreMySqlDbContext(DbContextOptions<EventStoreMySqlDbContext> options) : base(options)
+        public EventStoreMySqlDbContext(DbContextOptions<EventStoreMySqlDbContext> options, IMySqlConfiguration efCoreConfiguration) : base(options)
         {
+            _efCoreConfiguration = efCoreConfiguration;
+            // _efCoreConfiguration = efCoreConfiguration;
             //_efCoreConfiguration = efCoreConfiguration;
         }
 
