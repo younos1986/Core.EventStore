@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Autofac;
 using Core.EventStore.Configurations;
 using Core.EventStore.Contracts;
 using Core.EventStore.EFCore.SqlServer.Autofac;
@@ -9,9 +10,10 @@ namespace Core.EventStore.EFCore.SqlServer.Implementations
     public class PositionWriteService: IPositionWriteService
     {
         private readonly EventStoreEfCoreDbContext _dbContext;
-        public PositionWriteService(EventStoreEfCoreDbContext  dbContext)
+        public PositionWriteService(ILifetimeScope container)
         {
-            _dbContext = dbContext;
+            var _configuration = container.Resolve<IEfCoreConfiguration>();
+            _dbContext = container.Resolve<EventStoreEfCoreDbContext>();
         }
         
         public async Task InsertOneAsync(EventStorePosition entity)

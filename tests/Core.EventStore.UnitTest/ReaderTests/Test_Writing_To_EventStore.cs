@@ -12,16 +12,16 @@ namespace Core.EventStore.UnitTest.ReaderTests
 {
     public class TestInitializedData: GivenWhenThen
     {
-        private ContainerBuilder _builder;
-        private IContainer _container;
-        private readonly string _username = "admin";
-        private readonly string _password = "changeit";
-        private readonly int _defaultPort = 1113;
-        private readonly bool _isDockerized = false;
-        private readonly string _connectionUri = "127.0.0.1";
+        // private ContainerBuilder _builder;
+        // private IContainer _container;
+        // private readonly string _username = "admin";
+        // private readonly string _password = "changeit";
+        // private readonly int _defaultPort = 1113;
+        // private readonly bool _isDockerized = false;
+        // private readonly string _connectionUri = "127.0.0.1";
         protected override void Given()
         {
-            _builder = new ContainerBuilder();  
+            //_builder = new ContainerBuilder();  
             
             // _builder.RegisterEventStore(initializationConfiguration =>
             // {

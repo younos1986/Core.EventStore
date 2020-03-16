@@ -10,16 +10,16 @@ namespace Core.EventStore.UnitTest.WriterTests
 {
     public class TestInitializedWriteData: GivenWhenThen
     {
-        private ContainerBuilder _builder;
-        private IContainer _container;
-        private readonly string _username = "admin";
-        private readonly string _password = "changeit";
-        private readonly int _defaultPort = 1113;
-        private readonly bool _isDockerized = false;
-        private readonly string _connectionUri = "127.0.0.1";
+        // private ContainerBuilder _builder;
+        // private IContainer _container;
+        // private readonly string _username = "admin";
+        // private readonly string _password = "changeit";
+        // private readonly int _defaultPort = 1113;
+        // private readonly bool _isDockerized = false;
+        // private readonly string _connectionUri = "127.0.0.1";
         protected override void Given()
         {
-            _builder = new ContainerBuilder();
+            //_builder = new ContainerBuilder();
 
             // _builder.RegisterEventStore(initializationConfiguration =>
             // {
@@ -43,7 +43,7 @@ namespace Core.EventStore.UnitTest.WriterTests
             //     return init;
             // });
 
-            _container = _builder.Build();
+            //_container = _builder.Build();
         }
 
         protected override void When()

@@ -29,9 +29,12 @@ namespace MySqlQueryService.IoCC.Modules
                     }, new CustomProjectorInvoker())
                     .UseeMySql(context =>
                     {
-                        IMySqlConfiguration configuration = new MySqlConfiguration();
-                        configuration.ConnectionString = "server=localhost;Database=EventStoreDb;uid=root;pwd=TTTttt456;sslmode=none;";
-                        return configuration;
+                        var configuration = context.Resolve<IConfiguration>();
+                        var mySqlConnectionString = configuration.GetValue<string>("CoreEventStore:MySqlConfig:ConnectionString");
+                        
+                        var  mySqlConfiguration = new MySqlConfiguration();
+                        mySqlConfiguration.ConnectionString = mySqlConnectionString;
+                        return mySqlConfiguration;
                         
                     })
                     .KeepPositionInMySql()

@@ -12,9 +12,9 @@ namespace Core.EventStore.MySql.EFCore.DbContexts
         
         
         private readonly IMySqlConfiguration _efCoreConfiguration;
-        public EventStoreMySqlDbContext(DbContextOptions<EventStoreMySqlDbContext> options, IMySqlConfiguration efCoreConfiguration) : base(options)
+        public EventStoreMySqlDbContext(DbContextOptions<EventStoreMySqlDbContext> options) : base(options)
         {
-            _efCoreConfiguration = efCoreConfiguration;
+            //_efCoreConfiguration = efCoreConfiguration;
         }
 
         
@@ -22,7 +22,7 @@ namespace Core.EventStore.MySql.EFCore.DbContexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql(_efCoreConfiguration.ConnectionString);
+                //optionsBuilder.UseMySql(_efCoreConfiguration.ConnectionString);
             }
         }
 

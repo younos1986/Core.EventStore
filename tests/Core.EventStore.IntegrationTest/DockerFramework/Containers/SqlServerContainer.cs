@@ -158,7 +158,7 @@ END
                         try
                         {
                             //await Task.Delay(3000).ConfigureAwait(false);
-                            using (var connection = new SqlConnection(builder.ConnectionString))
+                            await using (var connection = new SqlConnection(builder.ConnectionString))
                             {
                                 await connection.OpenAsync();
                                 connection.Close();

@@ -17,6 +17,7 @@ namespace Core.EventStore.EFCore.SqlServer.Implementations
         private readonly EventStoreEfCoreDbContext _dbContext;
         public IdempotenceReaderService(ILifetimeScope container)
         {
+            var _configuration = container.Resolve<IEfCoreConfiguration>();
             _dbContext = container.Resolve<EventStoreEfCoreDbContext>();
         }
         
